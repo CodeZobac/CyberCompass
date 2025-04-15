@@ -3,6 +3,7 @@
 import { ThemeProvider } from './theme-provider'
 import { useRouter } from 'next/navigation'
 import { RouterProvider } from 'react-aria-components'
+import { SessionProvider } from 'next-auth/react'
 
 declare module 'react-aria-components' {
   interface RouterConfig {
@@ -14,8 +15,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   return (
-    <RouterProvider navigate={router.push}>
-      <ThemeProvider enableSystem attribute="class">{children}</ThemeProvider>
-    </RouterProvider>
+    <SessionProvider>
+      <RouterProvider navigate={router.push}>
+        <ThemeProvider enableSystem attribute="class">{children}</ThemeProvider>
+      </RouterProvider>
+    </SessionProvider>
   )
 }

@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.34.2",
+    "@auth/supabase-adapter": "^1.8.0",
     "@intentui/icons": "^1.10.33",
+    "@supabase/supabase-js": "^2.49.4",
+    "framer-motion": "^12.7.2",
     "justd-icons": "^1.10.27",
     "next": "15.3.0",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-aria-components": "^1.8.0",
     "react-dom": "^19.0.0",

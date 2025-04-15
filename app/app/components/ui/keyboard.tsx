@@ -11,6 +11,7 @@ interface KeyboardProps extends React.HTMLAttributes<HTMLElement> {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Keyboard = ({ keys, classNames, className, ...props }: KeyboardProps) => {
   return (
     <KeyboardPrimitive

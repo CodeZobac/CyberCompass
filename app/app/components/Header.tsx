@@ -23,7 +23,6 @@ const Header = () => {
                         alt="Cyber Compass"
                         width={250}
                         height={125}
-                        className=""
                     />
                 ) : (
                     <Image
@@ -31,7 +30,6 @@ const Header = () => {
                         alt="Cyber Compass"
                         width={250}
                         height={125}
-                        className=""
                     />
                 )}
             </div>
