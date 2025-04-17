@@ -1,8 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-
-import { IconX } from "@intentui/icons"
 import type { HeadingProps } from "react-aria-components"
 import {
   Button as ButtonPrimitive,
@@ -10,11 +8,8 @@ import {
   Heading,
   Text,
 } from "react-aria-components"
-
-import { composeTailwindRenderProps } from "@/components/ui/primitive"
-import useMediaQuery from "@utils/use-media-query"
 import { twJoin, twMerge } from "tailwind-merge"
-import { Button, type ButtonProps } from "./button"
+
 
 const Dialog = ({
   role = "dialog",
@@ -164,39 +159,15 @@ const Footer = ({ className, ...props }: DialogFooterProps) => {
   )
 }
 
-const Close = ({ className, intent = "outline", ref, ...props }: ButtonProps) => {
-  return <Button slot="close" className={className} ref={ref} intent={intent} {...props} />
-}
 
-interface CloseButtonIndicatorProps extends Omit<ButtonProps, "children"> {
-  className?: string
-  isDismissable?: boolean | undefined
-}
 
-const CloseIndicator = ({ className, ...props }: CloseButtonIndicatorProps) => {
-  const isMobile = useMediaQuery("(max-width: 600px)")
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    if (isMobile && buttonRef.current) {
-      buttonRef.current.focus()
-    }
-  }, [isMobile])
-  return props.isDismissable ? (
-    <ButtonPrimitive
-      ref={buttonRef}
-      {...(isMobile ? { autoFocus: true } : {})}
-      aria-label="Close"
-      slot="close"
-      className={composeTailwindRenderProps(
-        className,
-        "close absolute top-1 right-1 z-50 grid size-8 place-content-center rounded-xl hover:bg-secondary focus:bg-secondary focus:outline-hidden focus-visible:ring-1 focus-visible:ring-primary sm:top-2 sm:right-2 sm:size-7 sm:rounded-md",
-      )}
-    >
-      <IconX className="size-4" />
-    </ButtonPrimitive>
-  ) : null
-}
+
+
+// Close button component for the Dialog
+const Close = (props: React.ComponentProps<typeof ButtonPrimitive>) => (
+  <ButtonPrimitive {...props} />
+)
 
 Dialog.Trigger = Trigger
 Dialog.Header = Header
@@ -205,7 +176,7 @@ Dialog.Description = Description
 Dialog.Body = Body
 Dialog.Footer = Footer
 Dialog.Close = Close
-Dialog.CloseIndicator = CloseIndicator
+
 
 export type {
   DialogHeaderProps,
@@ -213,6 +184,6 @@ export type {
   DialogBodyProps,
   DialogFooterProps,
   DialogDescriptionProps,
-  CloseButtonIndicatorProps,
+
 }
 export { Dialog }

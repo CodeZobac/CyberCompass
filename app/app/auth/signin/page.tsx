@@ -30,7 +30,7 @@ export default function SignIn() {
 
         <Button
           onClick={handleSignIn}
-          isDisabled={isLoading}
+          disabled={isLoading}
           className="w-full flex items-center justify-center gap-3"
         >
           {isLoading ? (

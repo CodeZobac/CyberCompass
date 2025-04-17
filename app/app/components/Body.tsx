@@ -4,7 +4,15 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Dialog } from "./ui/dialog";
+import { 
+  Dialog,
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle 
+} from "./ui/retrodialog";
+import { RetroCard, RetroCardHeader, RetroCardTitle, RetroCardDescription } from "./Card";
 import { motion } from "framer-motion";
 
 const cyberthreats = [
@@ -17,7 +25,7 @@ const cyberthreats = [
   },
   {
     title: "Disinformation",
-    description: "False information deliberately spread to deceive people",
+    description: "False information deliberately spread mainly in social media to deceive other people",
     icon: "/globe.svg",
     color: "from-amber-500/20 to-orange-500/20",
     hoverColor: "group-hover:from-amber-500/30 group-hover:to-orange-500/30"
@@ -84,9 +92,8 @@ export default function Body() {
             cyberbullying, and catfishing attacks.
           </p>
           <Button 
-            size="large" 
-            intent="primary" 
-            className="animate-pulse hover:animate-none"
+            size="lg" 
+            variant="brutal" 
             onClick={() => setShowDialog(true)}
           >
             Start Your Cyber Challenge
@@ -105,18 +112,24 @@ export default function Body() {
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-muted/50 backdrop-blur-sm p-6 rounded-xl border border-border">
-              <h3 className="text-3xl font-bold text-accent mb-2">{statistics.users.toLocaleString()}+</h3>
-              <p className="text-muted-fg">Users trained</p>
-            </div>
-            <div className="bg-muted/50 backdrop-blur-sm p-6 rounded-xl border border-border">
-              <h3 className="text-3xl font-bold text-primary mb-2">{statistics.challenges.toLocaleString()}+</h3>
-              <p className="text-muted-fg">Challenges completed</p>
-            </div>
-            <div className="bg-muted/50 backdrop-blur-sm p-6 rounded-xl border border-border">
-              <h3 className="text-3xl font-bold text-success mb-2">{statistics.success}%</h3>
-              <p className="text-muted-fg">Improved awareness</p>
-            </div>
+            <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
+              <RetroCardHeader>
+                <RetroCardTitle className="text-3xl font-bold text-accent normal-case">{statistics.users.toLocaleString()}+</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Users trained</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
+            <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
+              <RetroCardHeader>
+                <RetroCardTitle className="text-3xl font-bold text-primary normal-case">{statistics.challenges.toLocaleString()}+</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Challenges completed</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
+            <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
+              <RetroCardHeader>
+                <RetroCardTitle className="text-3xl font-bold text-success normal-case">{statistics.success}%</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Improved awareness</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
           </div>
         </div>
       </section>
@@ -137,16 +150,21 @@ export default function Body() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group relative p-6 rounded-xl border border-border cursor-pointer 
-                  ${index === activeIndex ? 'ring-2 ring-accent' : ''}`}
                 onClick={() => setActiveIndex(index)}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${threat.color} ${threat.hoverColor} rounded-xl -z-10 transition-all duration-300`}></div>
-                <div className="bg-muted/50 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-                  <Image src={threat.icon} alt={threat.title} width={24} height={24} />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{threat.title}</h3>
-                <p className="text-muted-fg text-sm">{threat.description}</p>
+                <RetroCard 
+                  className={`group relative rounded-xl cursor-pointer 
+                    ${index === activeIndex ? 'ring-2 ring-accent' : ''}`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${threat.color} ${threat.hoverColor} rounded-xl -z-10 transition-all duration-300`}></div>
+                  <RetroCardHeader className="pb-0">
+                    <div className="bg-muted/50 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                      <Image src={threat.icon} alt={threat.title} width={24} height={24} />
+                    </div>
+                    <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">{threat.title}</RetroCardTitle>
+                    <RetroCardDescription className="text-muted-fg text-sm">{threat.description}</RetroCardDescription>
+                  </RetroCardHeader>
+                </RetroCard>
               </motion.div>
             ))}
           </div>
@@ -162,27 +180,33 @@ export default function Body() {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-accent">1</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Take the Challenge</h3>
-              <p className="text-muted-fg">Choose from various scenarios that simulate real-world cyber threats.</p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-primary">2</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Test Your Skills</h3>
-              <p className="text-muted-fg">Navigate through interactive challenges designed to test your ability to identify threats.</p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-success/20 flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-success">3</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Learn & Improve</h3>
-              <p className="text-muted-fg">Get instant feedback and actionable tips to improve your cyber awareness.</p>
-            </div>
+            <RetroCard className="text-center border-0 bg-transparent">
+              <RetroCardHeader className="pb-0">
+                <div className="mx-auto w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                  <span className="text-2xl font-bold text-accent">1</span>
+                </div>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Take the Challenge</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Choose from various scenarios that simulate real-world cyber threats.</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
+            <RetroCard className="text-center border-0 bg-transparent">
+              <RetroCardHeader className="pb-0">
+                <div className="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                  <span className="text-2xl font-bold text-primary">2</span>
+                </div>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Test Your Skills</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Navigate through interactive challenges designed to test your ability to identify threats.</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
+            <RetroCard className="text-center border-0 bg-transparent">
+              <RetroCardHeader className="pb-0">
+                <div className="mx-auto w-16 h-16 rounded-full bg-success/20 flex items-center justify-center mb-4">
+                  <span className="text-2xl font-bold text-success">3</span>
+                </div>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Learn & Improve</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">Get instant feedback and actionable tips to improve your cyber awareness.</RetroCardDescription>
+              </RetroCardHeader>
+            </RetroCard>
           </div>
         </div>
       </section>
@@ -195,65 +219,59 @@ export default function Body() {
             Join thousands of users who have strengthened their cyber awareness through our interactive challenges.
           </p>
           <Button 
-            size="large" 
-            intent="primary" 
+            size="lg" 
+            variant="brutal" 
             className="animate-pulse hover:animate-none"
             onClick={() => setShowDialog(true)}
           >
-            Begin Your Journey
+            Start Your Cyber Challenge
           </Button>
         </div>
       </section>
 
       {/* Challenge Dialog */}
-      {showDialog && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Dialog className="bg-bg rounded-xl shadow-lg w-full max-w-md mx-4">
-            <div className="sm:max-w-md">
-              <div className="flex justify-between items-center p-4 border-b border-border">
-                <Dialog.Header slot="title" className="text-xl font-semibold">Choose Your Challenge</Dialog.Header>
-                <Button 
-                  intent="plain" 
-                  size="small" 
-                  className="rounded-full" 
-                  onPress={() => setShowDialog(false)}
-                >
-                  <span aria-hidden>×</span>
-                  <span className="sr-only">Close</span>
-                </Button>
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Choose Your Challenge</DialogTitle>
+            <DialogDescription>
+              Select a challenge type to test your cyber awareness skills in different scenarios.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+            {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
+            {cyberthreats.map((threat, _index) => (
+              <div 
+                key={threat.title}
+                className="flex flex-col items-center cursor-pointer border-2 border-black p-4 hover:bg-muted/30 transition-colors rounded-sm shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:shadow-[4px_4px_0_0_#fff] dark:hover:shadow-none"
+                onClick={() => {
+                  setShowDialog(false);
+                  // This would redirect to the specific challenge page
+                  console.log(`Redirecting to challenge/${threat.title.toLowerCase()}`);
+                  // In a real implementation, you would use Next.js router:
+                  // router.push(`/challenge/${threat.title.toLowerCase()}`);
+                }}
+              >
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${threat.color.split(' ')[0]}`}>
+                  <Image src={threat.icon} alt={threat.title} width={24} height={24} />
+                </div>
+                <h3 className="font-bold mt-2">{threat.title}</h3>
+                <p className="text-sm text-center text-muted-fg mt-1">{threat.description}</p>
               </div>
-              <Dialog.Body slot="description" className="p-4 text-muted-fg">
-                Select a cyber threat challenge to begin your training in a safe environment.
-              </Dialog.Body>
-              
-              {/* Challenge Options */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
-                {cyberthreats.map((threat) => (
-                  <Button 
-                    key={threat.title}
-                    intent="outline" 
-                    className="justify-start h-auto py-4"
-                    onPress={() => window.location.href = `/challenges/${threat.title.toLowerCase()}`}
-                  >
-                    <div className="flex flex-col items-start text-left">
-                      <span className="font-semibold">{threat.title}</span>
-                      <span className="text-sm text-muted-fg">{threat.description}</span>
-                    </div>
-                  </Button>
-                ))}
-              </div>
-              <div className="flex justify-end p-4 border-t border-border">
-                <Button 
-                  intent="secondary"
-                  onPress={() => setShowDialog(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </Dialog>
-        </div>
-      )}
+            ))}
+          </div>
+          
+          <DialogFooter className="flex items-center justify-between border-t border-border pt-4 mt-4">
+            <Button variant="brutal-normal" onClick={() => setShowDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="brutal">
+              Random Challenge
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
