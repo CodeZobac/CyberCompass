@@ -1,0 +1,66 @@
+{
+  "header": {
+    "languageSwitcher": "Idioma"
+  },
+  "hero": {
+    "title": "Teste a sua Resiliência Digital num Ambiente Seguro",
+    "description": "Experiencie ameaças cibernéticas reais num ambiente controlado. Aprenda a identificar e defender-se contra deepfakes, desinformação, cyberbullying e catfishing.",
+    "button": "Iniciar o seu Desafio Cibernético"
+  },
+  "stats": {
+    "usersTrained": "Utilizadores treinados",
+    "challengesCompleted": "Desafios concluídos",
+    "improvedAwareness": "Consciencialização melhorada"
+  },
+  "threats": {
+    "sectionTitle": "Ameaças Cibernéticas que Aprenderá a Identificar",
+    "sectionDescription": "Os nossos desafios interativos simulam cenários do mundo real para o ajudar a reconhecer e responder às ameaças cibernéticas mais comuns de hoje.",
+    "items": {
+      "deepfakes": {
+        "title": "Deepfakes",
+        "description": "Conteúdo gerado por IA que pode imitar de forma convincente pessoas reais"
+      },
+      "disinformation": {
+        "title": "Desinformação",
+        "description": "Informações falsas deliberadamente divulgadas principalmente nas redes sociais para enganar outras pessoas"
+      },
+      "cyberbullying": {
+        "title": "Cyberbullying",
+        "description": "Utilização de plataformas digitais para assediar, ameaçar ou intimidar os outros"
+      },
+      "catfishing": {
+        "title": "Catfishing",
+        "description": "Criação de identidades online falsas para enganar os outros em relacionamentos"
+      }
+    }
+  },
+  "howItWorks": {
+    "sectionTitle": "Como Funciona o CyberCompass",
+    "sectionDescription": "A nossa plataforma oferece um ambiente seguro para experimentar e aprender com ameaças cibernéticas simuladas.",
+    "steps": {
+      "step1": {
+        "title": "Aceite o Desafio",
+        "description": "Escolha entre vários cenários que simulam ameaças cibernéticas do mundo real."
+      },
+      "step2": {
+        "title": "Teste as Suas Competências",
+        "description": "Navegue por desafios interativos concebidos para testar a sua capacidade de identificar ameaças."
+      },
+      "step3": {
+        "title": "Aprenda e Melhore", 
+        "description": "Obtenha feedback instantâneo e dicas práticas para melhorar a sua consciência cibernética."
+      }
+    }
+  },
+  "cta": {
+    "title": "Pronto para Testar a sua Resiliência Cibernética?",
+    "description": "Junte-se a milhares de utilizadores que fortaleceram a sua consciência cibernética através dos nossos desafios interativos.",
+    "button": "Iniciar o seu Desafio Cibernético"
+  },
+  "dialog": {
+    "title": "Escolha o seu Desafio",
+    "description": "Selecione um tipo de desafio para testar as suas competências de consciência cibernética em diferentes cenários.",
+    "cancel": "Cancelar",
+    "random": "Desafio Aleatório"
+  }
+}

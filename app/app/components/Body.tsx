@@ -1,8 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 import { Button } from "./ui/button";
 import { 
   Dialog,
@@ -21,28 +21,32 @@ const cyberthreats = [
     description: "AI-generated content that can convincingly impersonate real people",
     icon: "/file.svg",
     color: "from-blue-500/20 to-purple-500/20",
-    hoverColor: "group-hover:from-blue-500/30 group-hover:to-purple-500/30"
+    hoverColor: "group-hover:from-blue-500/30 group-hover:to-purple-500/30",
+    key: "deepfakes"
   },
   {
     title: "Disinformation",
     description: "False information deliberately spread mainly in social media to deceive other people",
     icon: "/globe.svg",
     color: "from-amber-500/20 to-orange-500/20",
-    hoverColor: "group-hover:from-amber-500/30 group-hover:to-orange-500/30"
+    hoverColor: "group-hover:from-amber-500/30 group-hover:to-orange-500/30",
+    key: "disinformation"
   },
   {
     title: "Cyberbullying",
     description: "Using digital platforms to harass, threaten, or intimidate others",
     icon: "/window.svg",
     color: "from-red-500/20 to-rose-500/20",
-    hoverColor: "group-hover:from-red-500/30 group-hover:to-rose-500/30"
+    hoverColor: "group-hover:from-red-500/30 group-hover:to-rose-500/30",
+    key: "cyberbullying"
   },
   {
     title: "Catfishing",
     description: "Creating fake online identities to deceive others into relationships",
     icon: "/window.svg",
     color: "from-emerald-500/20 to-teal-500/20",
-    hoverColor: "group-hover:from-emerald-500/30 group-hover:to-teal-500/30"
+    hoverColor: "group-hover:from-emerald-500/30 group-hover:to-teal-500/30",
+    key: "catfishing"
   }
 ];
 
@@ -50,6 +54,14 @@ export default function Body() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showDialog, setShowDialog] = useState(false);
   const [statistics, setStatistics] = useState({ users: 0, challenges: 0, success: 0 });
+  
+  // Translation hooks
+  const heroT = useTranslations('hero');
+  const statsT = useTranslations('stats');
+  const threatsT = useTranslations('threats');
+  const howItWorksT = useTranslations('howItWorks');
+  const ctaT = useTranslations('cta');
+  const dialogT = useTranslations('dialog');
   
   // Animate counter
   useEffect(() => {
@@ -84,19 +96,17 @@ export default function Body() {
           className="max-w-4xl mx-auto"
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-            Test Your Digital Resilience in a Safe Environment
+            {heroT('title')}
           </h1>
           <p className="text-xl text-muted-fg mb-10 max-w-3xl mx-auto">
-            Experience real-world cyber threats in a controlled environment. 
-            Learn to identify and defend against deepfakes, disinformation, 
-            cyberbullying, and catfishing attacks.
+            {heroT('description')}
           </p>
           <Button 
             size="lg" 
             variant="brutal" 
             onClick={() => setShowDialog(true)}
           >
-            Start Your Cyber Challenge
+            {heroT('button')}
           </Button>
         </motion.div>
         
@@ -115,19 +125,19 @@ export default function Body() {
             <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
               <RetroCardHeader>
                 <RetroCardTitle className="text-3xl font-bold text-accent normal-case">{statistics.users.toLocaleString()}+</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Users trained</RetroCardDescription>
+                <RetroCardDescription className="text-muted-fg">{statsT('usersTrained')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
             <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
               <RetroCardHeader>
                 <RetroCardTitle className="text-3xl font-bold text-primary normal-case">{statistics.challenges.toLocaleString()}+</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Challenges completed</RetroCardDescription>
+                <RetroCardDescription className="text-muted-fg">{statsT('challengesCompleted')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
             <RetroCard className="bg-muted/50 backdrop-blur-sm rounded-xl">
               <RetroCardHeader>
                 <RetroCardTitle className="text-3xl font-bold text-success normal-case">{statistics.success}%</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Improved awareness</RetroCardDescription>
+                <RetroCardDescription className="text-muted-fg">{statsT('improvedAwareness')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
           </div>
@@ -137,10 +147,9 @@ export default function Body() {
       {/* Threats Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-center">Cyber Threats You'll Learn to Identify</h2>
+          <h2 className="text-3xl font-bold mb-2 text-center">{threatsT('sectionTitle')}</h2>
           <p className="text-muted-fg text-center mb-12 max-w-3xl mx-auto">
-            Our interactive challenges simulate real-world scenarios to help you recognize and respond 
-            to today's most common cyber threats.
+            {threatsT('sectionDescription')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -161,8 +170,12 @@ export default function Body() {
                     <div className="bg-muted/50 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                       <Image src={threat.icon} alt={threat.title} width={24} height={24} />
                     </div>
-                    <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">{threat.title}</RetroCardTitle>
-                    <RetroCardDescription className="text-muted-fg text-sm">{threat.description}</RetroCardDescription>
+                    <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">
+                      {threatsT(`items.${threat.key}.title`)}
+                    </RetroCardTitle>
+                    <RetroCardDescription className="text-muted-fg text-sm">
+                      {threatsT(`items.${threat.key}.description`)}
+                    </RetroCardDescription>
                   </RetroCardHeader>
                 </RetroCard>
               </motion.div>
@@ -174,9 +187,9 @@ export default function Body() {
       {/* How It Works Section */}
       <section className="py-20 px-6 bg-muted/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-center">How CyberCompass Works</h2>
+          <h2 className="text-3xl font-bold mb-2 text-center">{howItWorksT('sectionTitle')}</h2>
           <p className="text-muted-fg text-center mb-12 max-w-3xl mx-auto">
-            Our platform provides a safe environment to experience and learn from simulated cyber threats.
+            {howItWorksT('sectionDescription')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -185,8 +198,8 @@ export default function Body() {
                 <div className="mx-auto w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
                   <span className="text-2xl font-bold text-accent">1</span>
                 </div>
-                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Take the Challenge</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Choose from various scenarios that simulate real-world cyber threats.</RetroCardDescription>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">{howItWorksT('steps.step1.title')}</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">{howItWorksT('steps.step1.description')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
             <RetroCard className="text-center border-0 bg-transparent">
@@ -194,8 +207,8 @@ export default function Body() {
                 <div className="mx-auto w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                   <span className="text-2xl font-bold text-primary">2</span>
                 </div>
-                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Test Your Skills</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Navigate through interactive challenges designed to test your ability to identify threats.</RetroCardDescription>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">{howItWorksT('steps.step2.title')}</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">{howItWorksT('steps.step2.description')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
             <RetroCard className="text-center border-0 bg-transparent">
@@ -203,8 +216,8 @@ export default function Body() {
                 <div className="mx-auto w-16 h-16 rounded-full bg-success/20 flex items-center justify-center mb-4">
                   <span className="text-2xl font-bold text-success">3</span>
                 </div>
-                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">Learn & Improve</RetroCardTitle>
-                <RetroCardDescription className="text-muted-fg">Get instant feedback and actionable tips to improve your cyber awareness.</RetroCardDescription>
+                <RetroCardTitle className="text-xl font-semibold mb-2 normal-case">{howItWorksT('steps.step3.title')}</RetroCardTitle>
+                <RetroCardDescription className="text-muted-fg">{howItWorksT('steps.step3.description')}</RetroCardDescription>
               </RetroCardHeader>
             </RetroCard>
           </div>
@@ -214,9 +227,9 @@ export default function Body() {
       {/* CTA Section */}
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Test Your Cyber Resilience?</h2>
+          <h2 className="text-3xl font-bold mb-6">{ctaT('title')}</h2>
           <p className="text-muted-fg mb-10">
-            Join thousands of users who have strengthened their cyber awareness through our interactive challenges.
+            {ctaT('description')}
           </p>
           <Button 
             size="lg" 
@@ -224,7 +237,7 @@ export default function Body() {
             className="animate-pulse hover:animate-none"
             onClick={() => setShowDialog(true)}
           >
-            Start Your Cyber Challenge
+            {ctaT('button')}
           </Button>
         </div>
       </section>
@@ -233,15 +246,14 @@ export default function Body() {
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Choose Your Challenge</DialogTitle>
+            <DialogTitle>{dialogT('title')}</DialogTitle>
             <DialogDescription>
-              Select a challenge type to test your cyber awareness skills in different scenarios.
+              {dialogT('description')}
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-            {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
-            {cyberthreats.map((threat, _index) => (
+            {cyberthreats.map((threat) => (
               <div 
                 key={threat.title}
                 className="flex flex-col items-center cursor-pointer border-2 border-black p-4 hover:bg-muted/30 transition-colors rounded-sm shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:shadow-[4px_4px_0_0_#fff] dark:hover:shadow-none"
@@ -256,18 +268,18 @@ export default function Body() {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${threat.color.split(' ')[0]}`}>
                   <Image src={threat.icon} alt={threat.title} width={24} height={24} />
                 </div>
-                <h3 className="font-bold mt-2">{threat.title}</h3>
-                <p className="text-sm text-center text-muted-fg mt-1">{threat.description}</p>
+                <h3 className="font-bold mt-2">{threatsT(`items.${threat.key}.title`)}</h3>
+                <p className="text-sm text-center text-muted-fg mt-1">{threatsT(`items.${threat.key}.description`)}</p>
               </div>
             ))}
           </div>
           
           <DialogFooter className="flex items-center justify-between border-t border-border pt-4 mt-4">
             <Button variant="brutal-normal" onClick={() => setShowDialog(false)}>
-              Cancel
+              {dialogT('cancel')}
             </Button>
             <Button variant="brutal">
-              Random Challenge
+              {dialogT('random')}
             </Button>
           </DialogFooter>
         </DialogContent>

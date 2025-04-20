@@ -1,0 +1,66 @@
+{
+  "header": {
+    "languageSwitcher": "Language"
+  },
+  "hero": {
+    "title": "Test Your Digital Resilience in a Safe Environment",
+    "description": "Experience real-world cyber threats in a controlled environment. Learn to identify and defend against deepfakes, disinformation, cyberbullying, and catfishing attacks.",
+    "button": "Start Your Cyber Challenge"
+  },
+  "stats": {
+    "usersTrained": "Users trained",
+    "challengesCompleted": "Challenges completed",
+    "improvedAwareness": "Improved awareness"
+  },
+  "threats": {
+    "sectionTitle": "Cyber Threats You'll Learn to Identify",
+    "sectionDescription": "Our interactive challenges simulate real-world scenarios to help you recognize and respond to today's most common cyber threats.",
+    "items": {
+      "deepfakes": {
+        "title": "Deepfakes",
+        "description": "AI-generated content that can convincingly impersonate real people"
+      },
+      "disinformation": {
+        "title": "Disinformation",
+        "description": "False information deliberately spread mainly in social media to deceive other people"
+      },
+      "cyberbullying": {
+        "title": "Cyberbullying",
+        "description": "Using digital platforms to harass, threaten, or intimidate others"
+      },
+      "catfishing": {
+        "title": "Catfishing",
+        "description": "Creating fake online identities to deceive others into relationships"
+      }
+    }
+  },
+  "howItWorks": {
+    "sectionTitle": "How CyberCompass Works",
+    "sectionDescription": "Our platform provides a safe environment to experience and learn from simulated cyber threats.",
+    "steps": {
+      "step1": {
+        "title": "Take the Challenge",
+        "description": "Choose from various scenarios that simulate real-world cyber threats."
+      },
+      "step2": {
+        "title": "Test Your Skills",
+        "description": "Navigate through interactive challenges designed to test your ability to identify threats."
+      },
+      "step3": {
+        "title": "Learn & Improve", 
+        "description": "Get instant feedback and actionable tips to improve your cyber awareness."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Test Your Cyber Resilience?",
+    "description": "Join thousands of users who have strengthened their cyber awareness through our interactive challenges.",
+    "button": "Start Your Cyber Challenge"
+  },
+  "dialog": {
+    "title": "Choose Your Challenge",
+    "description": "Select a challenge type to test your cyber awareness skills in different scenarios.",
+    "cancel": "Cancel",
+    "random": "Random Challenge"
+  }
+}

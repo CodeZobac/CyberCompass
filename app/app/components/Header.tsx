@@ -3,6 +3,7 @@
 import { HeaderMenu } from "./HeaderMenu";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
     const { theme } = useTheme();
@@ -33,9 +34,10 @@ const Header = () => {
                     />
                 )}
             </div>
-            <nav className="px-4 mr-24">
+            <div className="flex items-center px-4 mr-24">
+                <LanguageSwitcher />
                 <HeaderMenu />
-            </nav>
+            </div>
         </header>
     );
 }; 

@@ -1,13 +1,6 @@
-import Header from "./components/Header";
-import Body from "./components/Body";
+import { redirect } from 'next/navigation';
 
-
-export default function Home() {
-  return (
-    <main className="min-h-screen flex flex-col">
-      <Header />
-    
-      <Body />
-    </main>
-  );
+export default function RootPage() {
+  // Default redirect to English locale
+  redirect('/en');
 }
