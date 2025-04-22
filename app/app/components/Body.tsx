@@ -21,7 +21,7 @@ const cyberthreats = [
     description: "AI-generated content that can convincingly impersonate real people",
     icon: "/file.svg",
     color: "from-blue-500/20 to-purple-500/20",
-    hoverColor: "group-hover:from-blue-500/30 group-hover:to-purple-500/30",
+    activeColor: "from-blue-500/30 to-purple-500/30",
     key: "deepfakes"
   },
   {
@@ -29,7 +29,7 @@ const cyberthreats = [
     description: "False information deliberately spread mainly in social media to deceive other people",
     icon: "/globe.svg",
     color: "from-amber-500/20 to-orange-500/20",
-    hoverColor: "group-hover:from-amber-500/30 group-hover:to-orange-500/30",
+    activeColor: "from-amber-500/30 to-orange-500/30",
     key: "disinformation"
   },
   {
@@ -37,7 +37,7 @@ const cyberthreats = [
     description: "Using digital platforms to harass, threaten, or intimidate others",
     icon: "/window.svg",
     color: "from-red-500/20 to-rose-500/20",
-    hoverColor: "group-hover:from-red-500/30 group-hover:to-rose-500/30",
+    activeColor: "from-red-500/30 to-rose-500/30",
     key: "cyberbullying"
   },
   {
@@ -45,7 +45,7 @@ const cyberthreats = [
     description: "Creating fake online identities to deceive others into relationships",
     icon: "/window.svg",
     color: "from-emerald-500/20 to-teal-500/20",
-    hoverColor: "group-hover:from-emerald-500/30 group-hover:to-teal-500/30",
+    activeColor: "from-emerald-500/30 to-teal-500/30",
     key: "catfishing"
   }
 ];
@@ -80,7 +80,7 @@ export default function Body() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex(prevIndex => (prevIndex + 1) % cyberthreats.length);
-    }, 5000);
+    }, 3000);
     
     return () => clearInterval(interval);
   }, []);
@@ -163,9 +163,14 @@ export default function Body() {
               >
                 <RetroCard 
                   className={`group relative rounded-xl cursor-pointer 
-                    ${index === activeIndex ? 'ring-2 ring-accent' : ''}`}
+                    ${index === activeIndex ? 'ring-2 ring-accent' : ''} `}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${threat.color} ${threat.hoverColor} rounded-xl -z-10 transition-all duration-300`}></div>
+                  {/* <div className={`absolute inset-0 bg-gradient-to-br ${threat.color} ${threat.hoverColor} rounded-xl -z-10 transition-all duration-300`}></div>  */}
+                  <div
+                  className={`absolute inset-0 bg-gradient-to-br 
+                    ${index === activeIndex ? threat.activeColor : threat.color} 
+                    rounded-xl -z-10 transition-all duration-300`}> 
+                  </div>
                   <RetroCardHeader className="pb-0">
                     <div className="bg-muted/50 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                       <Image src={threat.icon} alt={threat.title} width={24} height={24} />

@@ -35,8 +35,8 @@ const Header = () => {
                 )}
             </div>
             <div className="flex items-center px-4 mr-24">
-                <LanguageSwitcher />
                 <HeaderMenu />
+                <LanguageSwitcher />
             </div>
         </header>
     );

@@ -53,16 +53,14 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="ml-4"> {/* Removed flex and gap as it's now a single element */}
+    <div className="ml-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          {/* Using ghost variant and sm size */}
-          <Button size="sm">
+          <Button size="sm" className='bg-black text-white hover:bg-gray-800'>
             {locale.toUpperCase()}
           </Button>
         </DropdownMenuTrigger>
-        {/* Added bg-background for opacity */}
-        <DropdownMenuContent className="w-20 bg-background"> 
+        <DropdownMenuContent className="w-20 bg-white"> 
           <DropdownMenuLabel>Select your language</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={locale} onValueChange={switchLocale}>

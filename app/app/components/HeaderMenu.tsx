@@ -10,12 +10,55 @@ import {
   IconSun,
 } from "@intentui/icons"
 import { useTheme } from "next-themes"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 export function HeaderMenu() {
   const { resolvedTheme, setTheme } = useTheme()
   const { data: session } = useSession()
   
+  if (!session) {
+    return (
+      <Menu>
+        <Menu.Trigger aria-label="Open Menu">
+          <Avatar 
+            alt="Guest" 
+            size="extra-large" 
+            src="/icon.jpg"
+          />
+        </Menu.Trigger>
+        <Menu.Content placement="bottom" showArrow className="sm:min-w-64">
+          <Menu.Header separator>
+            <span className="block">Guest</span>
+            <span className="font-normal text-muted-fg">Not signed in</span>
+          </Menu.Header>
+
+          <Menu.Submenu>
+            <Menu.Item>
+              {resolvedTheme === "light" ? (
+                <IconSun />
+              ) : (
+                <IconMoon />
+              )}
+              <Menu.Label>Switch Theme</Menu.Label>
+            </Menu.Item>
+            <Menu.Content>
+              <Menu.Item onAction={() => setTheme("dark")}>
+                <IconMoon /> Dark
+              </Menu.Item>
+              <Menu.Item onAction={() => setTheme("light")}>
+                <IconSun /> Light
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Submenu>
+          <Menu.Separator />
+          <Menu.Item onAction={() => signIn("google")}>
+            <span className="menu-label">Sign In / Register</span>
+          </Menu.Item>
+        </Menu.Content>
+      </Menu>
+    )
+  }
+
   return (
     <Menu>
       <Menu.Trigger aria-label="Open Menu">
