@@ -1,70 +1,268 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Head from 'next/head';
+import { signIn } from 'next-auth/react';
 
-export default function SignIn() {
+const LoginSignupForm = () => {
+  const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = async () => {
-    setIsLoading(true);
-    try {
-      await signIn('google', { callbackUrl: '/' });
-    } catch (error) {
-      console.error('Authentication error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleRegisterClick = () => {
+    setIsActive(true);
   };
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <div className="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-lg">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Sign in to Cyber Compass</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Use your Google account to sign in
-          </p>
-        </div>
+  const handleLoginClick = () => {
+    setIsActive(false);
+  };
 
-        <Button
-          onClick={handleSignIn}
-          disabled={isLoading}
-          className="w-full flex items-center justify-center gap-3"
+  const handleSignIn = async () => {
+      setIsLoading(true);
+      try {
+        await signIn('google', { callbackUrl: '/' });
+      } catch (error) {
+        console.error('Authentication error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+  return (
+    <>
+      <Head>
+        <title>Login/Signup Form</title>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
+      </Head>
+      
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-[#e2e2e2] to-[#c9d6ff]">
+        <div 
+          className={`relative w-[850px] h-[550px] bg-white mx-5 rounded-[30px] shadow-md overflow-hidden ${isActive ? 'active' : ''}`}
         >
-          {isLoading ? (
-            <span className="animate-spin">⟳</span>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24"
-              viewBox="0 0 24 24"
-              width="24"
-              className="h-5 w-5"
-            >
-              <path
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                fill="#4285F4"
-              />
-              <path
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                fill="#34A853"
-              />
-              <path
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                fill="#FBBC05"
-              />
-              <path
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                fill="#EA4335"
-              />
-              <path d="M1 1h22v22H1z" fill="none" />
-            </svg>
-          )}
-          Sign in with Google
-        </Button>
+          {/* Login Form */}
+          <div 
+            className={`absolute right-0 w-1/2 h-full bg-white flex items-center text-gray-800 text-center p-10 z-10 transition-all duration-600 ease-in-out delay-[1200ms] ${
+              isActive ? 'right-1/2' : ''
+            }`}
+          >
+            <form className="w-full">
+              <h1 className="text-4xl mb-4">Login</h1>
+              <div className="relative my-[30px]">
+                <input 
+                  type="text" 
+                  placeholder="Username" 
+                  required
+                  className="w-full py-[13px] pl-5 pr-[50px] bg-[#eee] rounded-lg border-none outline-none text-base text-gray-800 font-medium"
+                />
+                <i className='bx bxs-user absolute right-5 top-1/2 transform -translate-y-1/2 text-xl'></i>
+              </div>
+              <div className="relative my-[30px]">
+                <input 
+                  type="password" 
+                  placeholder="Password" 
+                  required
+                  className="w-full py-[13px] pl-5 pr-[50px] bg-[#eee] rounded-lg border-none outline-none text-base text-gray-800 font-medium"
+                />
+                <i className='bx bxs-lock-alt absolute right-5 top-1/2 transform -translate-y-1/2 text-xl'></i>
+              </div>
+              <div className="-mt-[15px] mb-[15px]">
+                <a href="#" className="text-sm text-gray-800">Forgot Password?</a>
+              </div>
+              <button 
+                type="submit" 
+                className="w-full h-12 bg-[#7494ec] rounded-lg shadow-sm border-none cursor-pointer text-base text-white font-semibold"
+              >
+                Login
+              </button>
+              <p className="text-sm my-[15px]">or login with social platforms</p>
+              <div className="flex justify-center">
+                <a onClick={handleSignIn} className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-google'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-facebook'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-github'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-linkedin'></i>
+                </a>
+              </div>
+            </form>
+          </div>
+
+          {/* Register Form */}
+          <div 
+            className={`absolute right-0 w-1/2 h-full bg-white flex items-center text-gray-800 text-center p-10 z-10 transition-all duration-600 ease-in-out delay-[1200ms] ${
+              isActive ? 'visible' : 'invisible'
+            }`}
+          >
+            <form className="w-full">
+              <h1 className="text-4xl mb-4">Registration</h1>
+              <div className="relative my-[30px]">
+                <input 
+                  type="text" 
+                  placeholder="Username" 
+                  required
+                  className="w-full py-[13px] pl-5 pr-[50px] bg-[#eee] rounded-lg border-none outline-none text-base text-gray-800 font-medium"
+                />
+                <i className='bx bxs-user absolute right-5 top-1/2 transform -translate-y-1/2 text-xl'></i>
+              </div>
+              <div className="relative my-[30px]">
+                <input 
+                  type="email" 
+                  placeholder="Email" 
+                  required
+                  className="w-full py-[13px] pl-5 pr-[50px] bg-[#eee] rounded-lg border-none outline-none text-base text-gray-800 font-medium"
+                />
+                <i className='bx bxs-envelope absolute right-5 top-1/2 transform -translate-y-1/2 text-xl'></i>
+              </div>
+              <div className="relative my-[30px]">
+                <input 
+                  type="password" 
+                  placeholder="Password" 
+                  required
+                  className="w-full py-[13px] pl-5 pr-[50px] bg-[#eee] rounded-lg border-none outline-none text-base text-gray-800 font-medium"
+                />
+                <i className='bx bxs-lock-alt absolute right-5 top-1/2 transform -translate-y-1/2 text-xl'></i>
+              </div>
+              <button 
+                type="submit" 
+                className="w-full h-12 bg-[#7494ec] rounded-lg shadow-sm border-none cursor-pointer text-base text-white font-semibold"
+              >
+                Register
+              </button>
+              <p className="text-sm my-[15px]">or register with social platforms</p>
+              <div className="flex justify-center">
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-google'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-facebook'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-github'></i>
+                </a>
+                <a href="#" className="inline-flex p-[10px] border-2 border-[#ccc] rounded-lg text-2xl text-gray-800 mx-2">
+                  <i className='bx bxl-linkedin'></i>
+                </a>
+              </div>
+            </form>
+          </div>
+
+          {/* Toggle Box */}
+          <div className="absolute w-full h-full">
+            <style jsx>{`
+              .toggle-box::before {
+                content: '';
+                position: absolute;
+                left: ${isActive ? '50%' : '-250%'};
+                width: 300%;
+                height: 100%;
+                background: #7494ec;
+                border-radius: 150px;
+                z-index: 2;
+                transition: 1.8s ease-in-out;
+              }
+              
+              @media screen and (max-width: 650px) {
+                .toggle-box::before {
+                  left: 0;
+                  top: ${isActive ? '70%' : '-270%'};
+                  width: 100%;
+                  height: 300%;
+                  border-radius: 20vw;
+                }
+              }
+            `}</style>
+            <div className="toggle-box">
+              {/* Left Toggle Panel */}
+              <div 
+                className={`absolute left-0 w-1/2 h-full text-white flex flex-col justify-center items-center z-20 transition-all duration-600 ease-in-out ${
+                  isActive ? 'left-[-50%] delay-[600ms]' : 'delay-[1200ms]'
+                }`}
+              >
+                <h1 className="text-4xl">Welcome Back!</h1>
+                <p className="text-sm my-5 mb-5">Don't have an account?</p>
+                <button 
+                  onClick={handleRegisterClick}
+                  className="w-40 h-[46px] bg-transparent border-2 border-white rounded-lg text-white font-semibold"
+                >
+                  Register
+                </button>
+              </div>
+              
+              {/* Right Toggle Panel */}
+              <div 
+                className={`absolute w-1/2 h-full text-white flex flex-col justify-center items-center z-20 transition-all duration-600 ease-in-out ${
+                  isActive ? 'right-0 delay-[1200ms]' : 'right-[-50%] delay-[600ms]'
+                }`}
+              >
+                <h1 className="text-4xl">Hello Welcome!</h1>
+                <p className="text-sm my-5 mb-5">Already have an account?</p>
+                <button 
+                  onClick={handleLoginClick}
+                  className="w-40 h-[46px] bg-transparent border-2 border-white rounded-lg text-white font-semibold"
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      
+      {/* Media Queries */}
+      <style jsx>{`
+        @media screen and (max-width: 650px) {
+          .active .form-box {
+            right: 0;
+            bottom: 30%;
+          }
+          
+          .form-box {
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+          }
+          
+          .toggle-panel {
+            width: 100%;
+            height: 30%;
+          }
+          
+          .toggle-panel.toggle-left {
+            top: 0;
+          }
+          
+          .active .toggle-panel.toggle-left {
+            left: 0;
+            top: -30%;
+          }
+          
+          .toggle-panel.toggle-right {
+            right: 0;
+            bottom: -30%;
+          }
+          
+          .active .toggle-panel.toggle-right {
+            bottom: 0;
+          }
+        }
+        
+        @media screen and (max-width: 400px) {
+          .form-box {
+            padding: 20px;
+          }
+          
+          .toggle-panel h1 {
+            font-size: 30px;
+          }
+        }
+      `}</style>
+    </>
   );
-}
+};
+
+export default LoginSignupForm;
