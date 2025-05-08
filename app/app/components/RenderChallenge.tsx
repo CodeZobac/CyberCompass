@@ -12,7 +12,7 @@ interface ChallengeListProps {
   userId?: string;
 }
 
-export const ChallengeList: React.FC<ChallengeListProps> = ({ challenges, userId }) => {
+export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, userId }) => {
   const router = useRouter();
   
   const {

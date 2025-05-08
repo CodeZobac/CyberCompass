@@ -152,51 +152,56 @@ export async function recordChallengeProgress(
       }
     }
 
-    // Check if user has already answered this challenge
-    const { data: existingProgress, error: progressError } = await supabase
-      .from('user_challenge_progress')
-      .select('id')
-      .eq('user_id', userId)
-      .eq('challenge_id', challengeId);
-
-    if (progressError) {
-      console.error('Error checking existing progress:', progressError);
-      throw new Error('Failed to check existing progress');
-    }
-
-    // Insert or update the user's progress
-    if (existingProgress && existingProgress.length > 0) {
-      // Update existing record
-      const { error: updateError } = await supabase
+    // Only record progress in the database for authenticated users (not anonymous)
+    if (userId !== 'anonymous') {
+      // Check if user has already answered this challenge
+      const { data: existingProgress, error: progressError } = await supabase
         .from('user_challenge_progress')
-        .update({
-          selected_option_id: selectedOptionId,
-          is_completed: true,
-          completed_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', existingProgress[0].id);
+        .select('id')
+        .eq('user_id', userId)
+        .eq('challenge_id', challengeId);
 
-      if (updateError) {
-        console.error('Error updating challenge progress:', updateError);
-        throw new Error('Failed to update challenge progress');
+      if (progressError) {
+        console.error('Error checking existing progress:', progressError);
+        throw new Error('Failed to check existing progress');
+      }
+
+      // Insert or update the user's progress
+      if (existingProgress && existingProgress.length > 0) {
+        // Update existing record
+        const { error: updateError } = await supabase
+          .from('user_challenge_progress')
+          .update({
+            selected_option_id: selectedOptionId,
+            is_completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existingProgress[0].id);
+
+        if (updateError) {
+          console.error('Error updating challenge progress:', updateError);
+          throw new Error('Failed to update challenge progress');
+        }
+      } else {
+        // Create new record
+        const { error: insertError } = await supabase
+          .from('user_challenge_progress')
+          .insert({
+            user_id: userId,
+            challenge_id: challengeId,
+            selected_option_id: selectedOptionId,
+            is_completed: true,
+            completed_at: new Date().toISOString()
+          });
+
+        if (insertError) {
+          console.error('Error inserting challenge progress:', insertError);
+          throw new Error('Failed to record challenge progress');
+        }
       }
     } else {
-      // Create new record
-      const { error: insertError } = await supabase
-        .from('user_challenge_progress')
-        .insert({
-          user_id: userId,
-          challenge_id: challengeId,
-          selected_option_id: selectedOptionId,
-          is_completed: true,
-          completed_at: new Date().toISOString()
-        });
-
-      if (insertError) {
-        console.error('Error inserting challenge progress:', insertError);
-        throw new Error('Failed to record challenge progress');
-      }
+      console.log('Anonymous user completed challenge - progress not saved to database');
     }
 
     return { isCorrect, correctOptionId };

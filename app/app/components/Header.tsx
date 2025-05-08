@@ -10,6 +10,7 @@ const Header = () => {
 
     return (
         <header className="bg-bg text-white p-4 shadow-md border-b border-gray-700/30 flex justify-between items-center">
+			<a href="/">
             <div className="flex items-center">
                 <Image
                     src="/logo-animated.gif"
@@ -34,6 +35,7 @@ const Header = () => {
                     />
                 )}
             </div>
+			</a>
             <div className="flex items-center px-4 mr-24">
                 <HeaderMenu />
                 <LanguageSwitcher />

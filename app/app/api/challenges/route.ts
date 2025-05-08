@@ -45,18 +45,9 @@ export async function GET(request: NextRequest) {
 // Submit an answer to a challenge
 export async function POST(request: NextRequest) {
   try {
-    // Check for authentication
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
-
     // Parse request body
     const body = await request.json();
-    const { challengeId, optionId } = body;
+    const { challengeId, optionId, userId = 'anonymous' } = body;
     
     if (!challengeId || !optionId) {
       return NextResponse.json(
@@ -65,9 +56,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Get session if available, otherwise use the provided userId
+    const session = await getServerSession(authOptions);
+    const userIdToUse = session?.user?.id || userId;
+    
     // Record the challenge progress
     const result = await recordChallengeProgress(
-      session.user.id,
+      userIdToUse,
       challengeId,
       optionId
     );
