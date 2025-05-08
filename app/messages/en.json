@@ -18,19 +18,23 @@
     "items": {
       "deepfakes": {
         "title": "Deepfakes",
-        "description": "AI-generated content that can convincingly impersonate real people"
+        "description": "AI-generated content that can convincingly impersonate real people",
+        "url": "http://localhost:3000/deepfakes"
       },
       "disinformation": {
         "title": "Disinformation",
-        "description": "False information deliberately spread mainly in social media to deceive other people"
+        "description": "False information deliberately spread mainly in social media to deceive other people",
+        "url": "http://localhost:3000/disinformation"
       },
       "cyberbullying": {
         "title": "Cyberbullying",
-        "description": "Using digital platforms to harass, threaten, or intimidate others"
+        "description": "Using digital platforms to harass, threaten, or intimidate others",
+        "url": "http://localhost:3000/cyberbullying"
       },
       "catfishing": {
         "title": "Catfishing",
-        "description": "Creating fake online identities to deceive others into relationships"
+        "description": "Creating fake online identities to deceive others into relationships",
+        "url": "http://localhost:3000/catfishing"
       }
     }
   },

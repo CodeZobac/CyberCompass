@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from 'next/navigation'; 
 import { useTranslations } from 'next-intl';
 import { Button } from "./ui/button";
 import { 
@@ -14,6 +15,7 @@ import {
 } from "./ui/retrodialog";
 import { RetroCard, RetroCardHeader, RetroCardTitle, RetroCardDescription } from "./Card";
 import { motion } from "framer-motion";
+
 
 const cyberthreats = [
   {
@@ -54,7 +56,7 @@ export default function Body() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showDialog, setShowDialog] = useState(false);
   const [statistics, setStatistics] = useState({ users: 0, challenges: 0, success: 0 });
-  
+  const router = useRouter(); 
   // Translation hooks
   const heroT = useTranslations('hero');
   const statsT = useTranslations('stats');
@@ -264,10 +266,7 @@ export default function Body() {
                 className="flex flex-col items-center cursor-pointer border-2 border-black p-4 hover:bg-muted/30 transition-colors rounded-sm shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:shadow-[4px_4px_0_0_#fff] dark:hover:shadow-none"
                 onClick={() => {
                   setShowDialog(false);
-                  // This would redirect to the specific challenge page
-                  console.log(`Redirecting to challenge/${threat.title.toLowerCase()}`);
-                  // In a real implementation, you would use Next.js router:
-                  // router.push(`/challenge/${threat.title.toLowerCase()}`);
+                  router.push(`/${threat.title.toLowerCase()}`);
                 }}
               >
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${threat.color.split(' ')[0]}`}>

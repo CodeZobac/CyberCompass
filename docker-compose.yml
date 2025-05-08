@@ -1,0 +1,55 @@
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - OLLAMA_HOST=http://ai-service:11434
+    depends_on:
+      - ai-service
+    networks:
+      - cyber-compass-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+
+  ai-service:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./Modelfile:/Modelfile
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - cyber-compass-network
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          memory: 6G
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    # The ollama container runs "ollama serve" by default
+    # We'll need to create the model separately after the container is running
+
+networks:
+  cyber-compass-network:
+    driver: bridge
+
+volumes:
+  ollama-data:

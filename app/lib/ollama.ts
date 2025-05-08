@@ -6,7 +6,9 @@ export async function generateOllamaResponse(
   model: string = 'cyber-compass'
 ): Promise<string> {
   try {
-    const response = await fetch('http://localhost:11434/api/generate', {
+    // Use the service name from docker-compose.yml instead of localhost
+    const ollamaUrl = process.env.OLLAMA_HOST || 'http://ai-service:11434';
+    const response = await fetch(`${ollamaUrl}/api/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
