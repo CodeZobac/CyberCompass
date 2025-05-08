@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Challenge } from '@lib/types';
+import { Challenge, ChallengeOption } from '@lib/types';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { useChallenges } from '@lib/hooks/useChallenges';
+import { AIFeedback } from './AIFeedback';
 
 interface ChallengeListProps {
   challenges: Challenge[];
@@ -32,6 +33,16 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
     userId,
     onComplete: () => router.push('/')
   });
+
+  // Find the selected option object
+  const selectedOptionObject = currentChallenge?.options?.find(
+    option => option.id === selectedOption
+  ) || null;
+  
+  // Find the correct option object
+  const correctOptionObject = currentChallenge?.options?.find(
+    option => option.is_correct
+  ) || null;
 
   if (!currentChallenge) {
     return (
@@ -102,6 +113,16 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
           </div>
         )}
       </Card>
+      
+      {/* AIFeedback component */}
+      {isAnswered && selectedOptionObject && correctOptionObject && (
+        <AIFeedback
+          challenge={currentChallenge}
+          selectedOption={selectedOptionObject}
+          correctOption={correctOptionObject}
+          isAnswered={isAnswered}
+        />
+      )}
     </div>
   );
 };
