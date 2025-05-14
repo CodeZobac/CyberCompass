@@ -5,26 +5,32 @@ import { authOptions } from '@lib/auth';
 import ListChallenges from '@/components/ListChallenges';
 import Header from '@/components/Header';
 
-async function CatfishingChallenges() {
+interface PageProps {
+  params: {
+    locale: string;
+  };
+}
+
+async function CatfishingChallenges({ locale }: { locale: string }) {
   const session = await getServerSession(authOptions);
-  const challenges = await getChallengesByCategorySlug('catfishing');
+  const challenges = await getChallengesByCategorySlug('catfishing', locale);
 
   return (
     <main>
-		<Header />
-		<ListChallenges 
-		challenges={challenges} 
-		userId={session?.user?.id}
-		categoryName="Catfishing" 
-		/>
-	</main>
+      <Header />
+      <ListChallenges 
+        challenges={challenges} 
+        userId={session?.user?.id}
+        categoryName="Catfishing" 
+      />
+    </main>
   );
 }
 
-export default function CatfishingPage() {
+export default function CatfishingPage({ params: { locale } }: PageProps) {
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading challenges...</div>}>
-      <CatfishingChallenges />
+      <CatfishingChallenges locale={locale} />
     </Suspense>
   );
 }

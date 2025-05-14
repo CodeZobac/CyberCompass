@@ -5,9 +5,15 @@ import { authOptions } from '@lib/auth';
 import ListChallenges from '@/components/ListChallenges';
 import Header from '@/components/Header';
 
-async function CyberbullyingChallenges() {
+interface PageProps {
+  params: {
+    locale: string;
+  };
+}
+
+async function CyberbullyingChallenges({ locale }: { locale: string }) {
   const session = await getServerSession(authOptions);
-  const challenges = await getChallengesByCategorySlug('cyberbullying');
+  const challenges = await getChallengesByCategorySlug('cyberbullying', locale);
 
   return (
     <main>
@@ -21,10 +27,10 @@ async function CyberbullyingChallenges() {
   );
 }
 
-export default function CyberbullyingPage() {
+export default function CyberbullyingPage({ params: { locale } }: PageProps) {
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading challenges...</div>}>
-      <CyberbullyingChallenges />
+      <CyberbullyingChallenges locale={locale} />
     </Suspense>
   );
 }

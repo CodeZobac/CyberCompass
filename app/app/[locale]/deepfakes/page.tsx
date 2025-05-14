@@ -5,9 +5,15 @@ import { authOptions } from '@lib/auth';
 import ListChallenges from '@/components/ListChallenges';
 import Header from '@/components/Header';
 
-async function DeepfakesChallenges() {
+interface PageProps {
+  params: {
+    locale: string;
+  };
+}
+
+async function DeepfakesChallenges({ locale }: { locale: string }) {
   const session = await getServerSession(authOptions);
-  const challenges = await getChallengesByCategorySlug('deepfakes');
+  const challenges = await getChallengesByCategorySlug('deepfakes', locale);
 
   return (
     <main>
@@ -21,10 +27,10 @@ async function DeepfakesChallenges() {
   );
 }
 
-export default function DeepfakesPage() {
+export default function DeepfakesPage({ params: { locale } }: PageProps) {
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading challenges...</div>}>
-      <DeepfakesChallenges />
+      <DeepfakesChallenges locale={locale} />
     </Suspense>
   );
 }

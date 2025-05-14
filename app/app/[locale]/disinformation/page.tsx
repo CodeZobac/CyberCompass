@@ -5,9 +5,15 @@ import { authOptions } from '@lib/auth';
 import ListChallenges from '@/components/ListChallenges';
 import Header from '@/components/Header';
 
-async function DisinformationChallenges() {
+interface PageProps {
+  params: {
+    locale: string;
+  };
+}
+
+async function DisinformationChallenges({ locale }: { locale: string }) {
   const session = await getServerSession(authOptions);
-  const challenges = await getChallengesByCategorySlug('disinformation');
+  const challenges = await getChallengesByCategorySlug('disinformation', locale);
 
   return (
     <main>
@@ -21,10 +27,10 @@ async function DisinformationChallenges() {
   );
 }
 
-export default function DisinformationPage() {
+export default function DisinformationPage({ params: { locale } }: PageProps) {
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading challenges...</div>}>
-      <DisinformationChallenges />
+      <DisinformationChallenges locale={locale} />
     </Suspense>
   );
 }

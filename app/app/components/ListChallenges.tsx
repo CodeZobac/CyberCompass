@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 import { Challenge } from '@lib/types';
-import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { 
   ResizablePanelGroup, 
-  ResizablePanel, 
-  ResizableHandle 
+  ResizablePanel
 } from '@/components/ui/resizable';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -20,7 +19,8 @@ interface ListChallengesProps {
 
 export default function ListChallenges({ challenges, userId, categoryName }: ListChallengesProps) {
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
-  const router = useRouter();
+  const params = useParams();
+  const locale = (params?.locale as string) || 'en';
 
   const handleSelectChallenge = (challenge: Challenge) => {
     setSelectedChallenge(challenge);
@@ -101,7 +101,9 @@ export default function ListChallenges({ challenges, userId, categoryName }: Lis
                           transition-colors ${colors.hoverBg} mb-4`}
                         onClick={() => handleSelectChallenge(challenge)}
                       >
-                        <h3 className="font-bold text-lg">{challenge.title}</h3>
+                        <h3 className="font-bold text-lg">
+                          {challenge.i18n?.[locale]?.title || challenge.title}
+                        </h3>
                         {challenge.difficulty && (
                           <div className="mt-3 text-sm">
                             <span className={`

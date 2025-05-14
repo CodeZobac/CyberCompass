@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation'; // Import useParams
 import { Challenge, ChallengeOption } from '@lib/types';
 
 interface AIFeedbackProps {
@@ -21,6 +22,7 @@ export function AIFeedback({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState<number>(0);
+  const params = useParams(); // Get URL parameters
 
   // Only fetch feedback when the question has been answered
   useEffect(() => {
@@ -42,7 +44,8 @@ export function AIFeedback({
             selectedOption: selectedOption.content,
             correctOption: correctOption.content,
             challengeTitle: challenge.title,
-            challengeDescription: challenge.description
+            challengeDescription: challenge.description,
+            locale: params.locale // Add locale to the request body
           }),
           // Add timeout to prevent long-hanging requests
           signal: AbortSignal.timeout(10000)
@@ -73,7 +76,7 @@ export function AIFeedback({
     };
 
     fetchFeedback();
-  }, [isAnswered, selectedOption, correctOption, challenge, retryCount]);
+  }, [isAnswered, selectedOption, correctOption, challenge, retryCount, params.locale]); // Added params.locale to dependency array
 
   // Generate fallback feedback if AI service is unavailable
   const generateFallbackFeedback = () => {

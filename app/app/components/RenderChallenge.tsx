@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Challenge, ChallengeOption } from '@lib/types';
+import { useParams } from 'next/navigation';
+import { Challenge } from '@lib/types';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { useChallenges } from '@lib/hooks/useChallenges';
@@ -15,6 +16,8 @@ interface ChallengeListProps {
 
 export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, userId }) => {
   const router = useRouter();
+  const params = useParams();
+  const locale = (params?.locale as string) || 'en';
   
   const {
     currentChallenge,
@@ -60,9 +63,13 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
       </div>
 
       <Card className="mb-6 p-6">
-        <h2 className="text-xl font-bold mb-4">{currentChallenge.title}</h2>
-        {currentChallenge.description && (
-          <p className="mb-6 text-gray-700">{currentChallenge.description}</p>
+        <h2 className="text-xl font-bold mb-4">
+          {currentChallenge.i18n?.[locale]?.title || currentChallenge.title}
+        </h2>
+        {(currentChallenge.i18n?.[locale]?.description || currentChallenge.description) && (
+          <p className="mb-6 text-gray-700">
+            {currentChallenge.i18n?.[locale]?.description || currentChallenge.description}
+          </p>
         )}       
         <div className="space-y-3">
           {currentChallenge.options?.map(option => (
@@ -82,7 +89,7 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
                     <div className="w-2 h-2 rounded-full bg-white"></div>
                   )}
                 </div>
-                <div>{option.content}</div>
+                <div>{option.i18n?.[locale]?.content || option.content}</div>
               </div>
             </div>
           ))}

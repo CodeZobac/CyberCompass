@@ -38,9 +38,9 @@ export async function getChallengeCategory(slug: string): Promise<ChallengeCateg
 
 /**
  * Get all challenges for a specific category slug
- * Includes challenge options
+ * Includes challenge options with translations
  */
-export async function getChallengesByCategorySlug(slug: string): Promise<Challenge[]> {
+export async function getChallengesByCategorySlug(slug: string, locale: string = 'en'): Promise<Challenge[]> {
   // First, get the category ID from the slug
   const category = await getChallengeCategory(slug);
   
@@ -48,11 +48,19 @@ export async function getChallengesByCategorySlug(slug: string): Promise<Challen
     return [];
   }
 
-  // Now get all challenges for this category ID
+  // Now get all challenges for this category ID with translations
   const { data: challenges, error: challengesError } = await supabase
     .from('challenges')
-    .select('*')
+    .select(`
+      *,
+      challenges_i18n!inner (
+        title,
+        description,
+        locale
+      )
+    `)
     .eq('category_id', category.id)
+    .eq('challenges_i18n.locale', locale)
     .order('order_index');
 
   if (challengesError) {
@@ -60,20 +68,50 @@ export async function getChallengesByCategorySlug(slug: string): Promise<Challen
     return [];
   }
 
-  // For each challenge, fetch its options
+  // For each challenge, fetch its options with translations
   const challengesWithOptions = await Promise.all(
     challenges.map(async (challenge) => {
       const { data: options, error: optionsError } = await supabase
         .from('challenge_options')
-        .select('*')
-        .eq('challenge_id', challenge.id);
+        .select(`
+          *,
+          challenge_options_i18n!inner (
+            content,
+            locale
+          )
+        `)
+        .eq('challenge_id', challenge.id)
+        .eq('challenge_options_i18n.locale', locale);
 
       if (optionsError) {
         console.error(`Error fetching options for challenge ${challenge.id}:`, optionsError);
         return { ...challenge, options: [] };
       }
 
-      return { ...challenge, options: options || [] };
+      // Transform the data to match our types
+      const transformedChallenge: Challenge = {
+        ...challenge,
+        title: challenge.challenges_i18n[0]?.title || challenge.title,
+        description: challenge.challenges_i18n[0]?.description || challenge.description,
+        i18n: {
+          [locale]: {
+            title: challenge.challenges_i18n[0]?.title || challenge.title,
+            description: challenge.challenges_i18n[0]?.description || challenge.description
+          }
+        }
+      };
+
+      const transformedOptions = options?.map(option => ({
+        ...option,
+        content: option.challenge_options_i18n[0]?.content || option.content,
+        i18n: {
+          [locale]: {
+            content: option.challenge_options_i18n[0]?.content || option.content
+          }
+        }
+      }));
+
+      return { ...transformedChallenge, options: transformedOptions || [] };
     })
   );
 
@@ -82,13 +120,21 @@ export async function getChallengesByCategorySlug(slug: string): Promise<Challen
 
 /**
  * Get a specific challenge by ID
- * Includes challenge options
+ * Includes challenge options with translations
  */
-export async function getChallenge(id: string): Promise<Challenge | null> {
+export async function getChallenge(id: string, locale: string = 'en'): Promise<Challenge | null> {
   const { data: challenge, error: challengeError } = await supabase
     .from('challenges')
-    .select('*')
+    .select(`
+      *,
+      challenges_i18n!inner (
+        title,
+        description,
+        locale
+      )
+    `)
     .eq('id', id)
+    .eq('challenges_i18n.locale', locale)
     .single();
 
   if (challengeError) {
@@ -96,18 +142,48 @@ export async function getChallenge(id: string): Promise<Challenge | null> {
     return null;
   }
 
-  // Get challenge options
+  // Get challenge options with translations
   const { data: options, error: optionsError } = await supabase
     .from('challenge_options')
-    .select('*')
-    .eq('challenge_id', id);
+    .select(`
+      *,
+      challenge_options_i18n!inner (
+        content,
+        locale
+      )
+    `)
+    .eq('challenge_id', id)
+    .eq('challenge_options_i18n.locale', locale);
 
   if (optionsError) {
     console.error(`Error fetching options for challenge ${id}:`, optionsError);
     return challenge;
   }
 
-  return { ...challenge, options };
+  // Transform the data to match our types
+  const transformedChallenge: Challenge = {
+    ...challenge,
+    title: challenge.challenges_i18n[0]?.title || challenge.title,
+    description: challenge.challenges_i18n[0]?.description || challenge.description,
+    i18n: {
+      [locale]: {
+        title: challenge.challenges_i18n[0]?.title || challenge.title,
+        description: challenge.challenges_i18n[0]?.description || challenge.description
+      }
+    }
+  };
+
+  const transformedOptions = options?.map(option => ({
+    ...option,
+    content: option.challenge_options_i18n[0]?.content || option.content,
+    i18n: {
+      [locale]: {
+        content: option.challenge_options_i18n[0]?.content || option.content
+      }
+    }
+  }));
+
+  return { ...transformedChallenge, options: transformedOptions };
 }
 
 /**
