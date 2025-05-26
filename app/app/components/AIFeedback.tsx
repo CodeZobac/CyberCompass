@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react'; // Import useCallback
+import * as React from 'react'; // Import React for React.useCallback
 import { useParams } from 'next/navigation'; // Import useParams
 import { Challenge, ChallengeOption } from '@lib/types';
 
@@ -23,6 +24,17 @@ export function AIFeedback({
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState<number>(0);
   const params = useParams(); // Get URL parameters
+
+  // Define generateFallbackFeedback before the useEffect that uses it
+  const generateFallbackFeedback = useCallback(() => {
+    const isCorrectAnswer = selectedOption?.is_correct;
+    
+    if (isCorrectAnswer) {
+      setFeedback(`Great job! You correctly selected "${selectedOption?.content}". This demonstrates your understanding of this cybersecurity concept.`);
+    } else {
+      setFeedback(`The correct answer is "${correctOption?.content}". Understanding the difference between your selected answer and the correct one will help deepen your cybersecurity knowledge.`);
+    }
+  }, [selectedOption, correctOption, setFeedback]);
 
   // Only fetch feedback when the question has been answered
   useEffect(() => {
@@ -76,18 +88,7 @@ export function AIFeedback({
     };
 
     fetchFeedback();
-  }, [isAnswered, selectedOption, correctOption, challenge, retryCount, params.locale]); // Added params.locale to dependency array
-
-  // Generate fallback feedback if AI service is unavailable
-  const generateFallbackFeedback = () => {
-    const isCorrectAnswer = selectedOption?.is_correct;
-    
-    if (isCorrectAnswer) {
-      setFeedback(`Great job! You correctly selected "${selectedOption?.content}". This demonstrates your understanding of this cybersecurity concept.`);
-    } else {
-      setFeedback(`The correct answer is "${correctOption?.content}". Understanding the difference between your selected answer and the correct one will help deepen your cybersecurity knowledge.`);
-    }
-  };
+  }, [isAnswered, selectedOption, correctOption, challenge, retryCount, params.locale, generateFallbackFeedback]);
 
   // Retry button handler
   const handleRetry = () => {
