@@ -62,5 +62,30 @@
     "description": "Selecione um tipo de desafio para testar as suas competências de consciência cibernética em diferentes cenários.",
     "cancel": "Cancelar",
     "random": "Desafio Aleatório"
+  },
+  "footer": {
+    "brand": {
+      "tagline": "Construindo Resiliência Digital Através de Aprendizagem Interativa",
+      "description": "O CyberCompass capacita os utilizadores a reconhecer e defender-se contra ameaças cibernéticas modernas num ambiente seguro e controlado."
+    },
+    "navigation": {
+      "challenges": "Desafios",
+      "deepfakes": "Deepfakes",
+      "disinformation": "Desinformação",
+      "cyberbullying": "Cyberbullying",
+      "catfishing": "Catfishing",
+      "about": "Sobre",
+      "contact": "Contacto",
+      "help": "Ajuda"
+    },
+    "legal": {
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Serviço",
+      "copyright": "© 2025 CyberCompass. Todos os direitos reservados."
+    },
+    "contact": {
+      "email": "contacto@cybercompass.com",
+      "social": "Siga-nos"
+    }
   }
 }

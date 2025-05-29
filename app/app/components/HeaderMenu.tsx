@@ -11,10 +11,36 @@ import {
 } from "@intentui/icons"
 import { useTheme } from "next-themes"
 import { signIn, useSession } from "next-auth/react"
+import { useEffect, useState } from "react" // Added useEffect and useState
 
 export function HeaderMenu() {
   const { resolvedTheme, setTheme } = useTheme()
   const { data: session } = useSession()
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (session) {
+        try {
+          const response = await fetch('/api/auth/is-admin');
+          if (response.ok) {
+            const data = await response.json();
+            setIsAdmin(data.isAdmin);
+          } else {
+            console.error("Failed to fetch admin status:", response.status);
+            setIsAdmin(false); // Default to false on error
+          }
+        } catch (error) {
+          console.error("Error fetching admin status:", error);
+          setIsAdmin(false); // Default to false on error
+        }
+      } else {
+        setIsAdmin(false); // Not logged in, not an admin
+      }
+    };
+
+    checkAdminStatus();
+  }, [session]);
   
   if (!session) {
     return (
@@ -79,6 +105,16 @@ export function HeaderMenu() {
             <IconDashboard />
             <Menu.Label>My Quests</Menu.Label>
           </Menu.Item>
+          <Menu.Item href="/submit-challenge">
+            {/* Add an appropriate icon if available, e.g. IconPlus or IconUpload */}
+            <Menu.Label>Submit Questions</Menu.Label> 
+          </Menu.Item>
+          {isAdmin && (
+            <Menu.Item href="/admin/challenges">
+              {/* Add an appropriate icon if available, e.g., IconShieldLock or IconSettingsCog */}
+              <Menu.Label>Admin Panel</Menu.Label>
+            </Menu.Item>
+          )}
           <Menu.Item href="#settings">
             <IconSettings />
             <Menu.Label>Profile</Menu.Label>

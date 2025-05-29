@@ -1,6 +1,5 @@
 'use client'
 
-import { ThemeProvider } from './theme-provider'
 import { useRouter } from 'next/navigation'
 import { RouterProvider } from 'react-aria-components'
 import { SessionProvider } from 'next-auth/react'
@@ -17,7 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
       <RouterProvider navigate={router.push}>
-        <ThemeProvider enableSystem attribute="class">{children}</ThemeProvider>
+        {children}
       </RouterProvider>
     </SessionProvider>
   )

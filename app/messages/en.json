@@ -66,5 +66,30 @@
     "description": "Select a challenge type to test your cyber awareness skills in different scenarios.",
     "cancel": "Cancel",
     "random": "Random Challenge"
+  },
+  "footer": {
+    "brand": {
+      "tagline": "Building Digital Resilience Through Interactive Learning",
+      "description": "CyberCompass empowers users to recognize and defend against modern cyber threats in a safe, controlled environment."
+    },
+    "navigation": {
+      "challenges": "Challenges",
+      "deepfakes": "Deepfakes",
+      "disinformation": "Disinformation",
+      "cyberbullying": "Cyberbullying",
+      "catfishing": "Catfishing",
+      "about": "About",
+      "contact": "Contact",
+      "help": "Help"
+    },
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "copyright": "© 2025 CyberCompass. All rights reserved."
+    },
+    "contact": {
+      "email": "contact@cybercompass.com",
+      "social": "Follow us"
+    }
   }
 }
