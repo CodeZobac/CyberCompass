@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { useParams } from 'next/navigation';
+import Header from '../../../components/Header';
 
 interface PendingChallenge {
   id: string;
@@ -158,7 +159,9 @@ export default function AdminQuestions() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
       {/* Header Section */}
       <div className="bg-white border-b-4 border-black shadow-[0_4px_0_0_#000]">
         <div className="container mx-auto px-6 py-8">
@@ -527,5 +530,6 @@ export default function AdminQuestions() {
         )}
       </div>
     </div>
+    </>
   );
 }

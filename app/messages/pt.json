@@ -154,7 +154,54 @@
       "email": "Endereço de Email",
       "add": "Adicionar",
       "rootAdmin": "Administrador Principal",
-      "regularAdmin": "Administrador Regular"
+      "regularAdmin": "Administrador Regular",
+      "permissions": "Permissões",
+      "addedBy": "Adicionado por",
+      "createdAt": "Criado em",
+      "actions": "Ações",
+      "removeRoot": "Remover Administrador Principal",
+      "toggleManageAdmins": "Alternar Gestão de Administradores",
+      "confirmRemove": "Tem a certeza que quer remover este administrador?",
+      "noAdmins": "Nenhum administrador encontrado.",
+      "currentAdmins": "Administradores Atuais",
+      "loading": "A carregar...",
+      "manageAdminsDesc": "Adicionar ou remover utilizadores admin e gerir permissões.",
+      "errors": {
+        "noPermission": "Não tem permissão para gerir administradores",
+        "userNotFound": "Utilizador com este email não foi encontrado",
+        "alreadyAdmin": "O utilizador já é um administrador",
+        "emailRequired": "Endereço de email é obrigatório",
+        "invalidEmail": "Por favor insira um endereço de email válido",
+        "addFailed": "Falha ao adicionar administrador. Tente novamente.",
+        "removeFailed": "Falha ao remover administrador. Tente novamente.",
+        "updateFailed": "Falha ao atualizar permissões. Tente novamente."
+      },
+      "success": {
+        "adminAdded": "Administrador adicionado com sucesso",
+        "adminRemoved": "Administrador removido com sucesso",
+        "permissionsUpdated": "Permissões atualizadas com sucesso"
+      }
+    },
+    "status": {
+      "active": "Ativo",
+      "overview": "Visão Geral",
+      "urgent": "Urgente",
+      "success": "Sucesso",
+      "rejected": "Rejeitadas",
+      "requireAttention": "Requerem atenção",
+      "publishedSuccessfully": "Publicadas com sucesso",
+      "notApproved": "Não aprovadas",
+      "quickActions": "Ações Rápidas",
+      "recentActivity": "Atividade Recente",
+      "analytics": "Dados",
+      "viewStatistics": "Ver Estatísticas",
+      "data": "Dados",
+      "detailedReports": "Visualize relatórios detalhados e métricas do sistema.",
+      "newQuestionSubmitted": "Nova pergunta submetida",
+      "questionApproved": "Pergunta aprovada",
+      "pendingReview": "Aguarda revisão",
+      "minutesAgo": "minutos",
+      "hourAgo": "hora"
     }
   }
 }

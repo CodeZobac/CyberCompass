@@ -4,13 +4,36 @@ import { authOptions } from '../../../lib/auth';
 import { redirect } from 'next/navigation';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
+import { supabase } from '../../../lib/supabase.js';
+import Header from '../../components/Header';
 
-// This would typically check admin status with Supabase
+// Check admin status by querying the Supabase admin_users table
 async function checkAdminStatus(userId: string) {
-  // For now, we'll assume the user is an admin if they're logged in
-  // In production, this would query the admin_users table
-  console.log(`Checking admin status for user: ${userId}`);
-  return { isAdmin: true, isRootAdmin: false };
+  try {
+    console.log(`Checking admin status for user: ${userId}`);
+    
+    // Query the admin_users table to check if user is an admin
+    const { data: adminUser, error } = await supabase
+      .from('admin_users')
+      .select('is_root_admin, can_manage_admins')
+      .eq('user_id', userId)
+      .single();
+
+    if (error || !adminUser) {
+      console.log('User is not an admin:', error?.message);
+      return { isAdmin: false, isRootAdmin: false };
+    }
+
+    console.log('Admin status found:', adminUser);
+    return { 
+      isAdmin: true, 
+      isRootAdmin: adminUser.is_root_admin,
+      canManageAdmins: adminUser.can_manage_admins
+    };
+  } catch (error) {
+    console.error('Error checking admin status:', error);
+    return { isAdmin: false, isRootAdmin: false };
+  }
 }
 
 export default async function AdminDashboard({
@@ -20,8 +43,9 @@ export default async function AdminDashboard({
 }) {
   const { locale } = await params;
   const session = await getServerSession(authOptions);
-  const t = await getTranslations('admin.dashboard');
-  const tActions = await getTranslations('admin.dashboard.actions');
+  const t = await getTranslations({ locale, namespace: 'admin.dashboard' });
+  const tActions = await getTranslations({ locale, namespace: 'admin.dashboard.actions' });
+  const tStatus = await getTranslations({ locale, namespace: 'admin.status' });
 
   if (!session?.user?.id) {
     redirect('/auth/signin');
@@ -41,7 +65,9 @@ export default async function AdminDashboard({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
       {/* Header Section */}
       <div className="bg-white border-b-4 border-black shadow-[0_4px_0_0_#000]">
         <div className="container mx-auto px-6 py-8">
@@ -57,7 +83,7 @@ export default async function AdminDashboard({
             <div className="hidden md:flex items-center space-x-4">
               <div className="bg-green-100 border-2 border-green-600 rounded-lg px-4 py-2">
                 <span className="text-green-800 font-semibold text-sm uppercase tracking-wider">
-                  ✅ {locale === 'pt' ? 'Ativo' : 'Active'}
+                  ✅ {tStatus('active')}
                 </span>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full border-4 border-black shadow-[4px_4px_0_0_#000] flex items-center justify-center">
@@ -72,7 +98,7 @@ export default async function AdminDashboard({
         {/* Enhanced Statistics Dashboard */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            📊 {locale === 'pt' ? 'Visão Geral' : 'Overview'}
+            📊 {tStatus('overview')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Pending Stats Card */}
@@ -84,7 +110,7 @@ export default async function AdminDashboard({
                   </div>
                   <div className="bg-orange-200 border-2 border-orange-600 rounded-full px-3 py-1">
                     <span className="text-orange-800 font-bold text-xs uppercase tracking-wider">
-                      {locale === 'pt' ? 'Urgente' : 'Urgent'}
+                      {tStatus('urgent')}
                     </span>
                   </div>
                 </div>
@@ -93,7 +119,7 @@ export default async function AdminDashboard({
                 </h3>
                 <p className="text-4xl font-black text-orange-600 mb-2">{stats.pending}</p>
                 <p className="text-sm text-orange-700 font-medium">
-                  {locale === 'pt' ? 'Requerem atenção' : 'Require attention'}
+                  {tStatus('requireAttention')}
                 </p>
               </Card>
             </div>
@@ -107,7 +133,7 @@ export default async function AdminDashboard({
                   </div>
                   <div className="bg-green-200 border-2 border-green-600 rounded-full px-3 py-1">
                     <span className="text-green-800 font-bold text-xs uppercase tracking-wider">
-                      {locale === 'pt' ? 'Sucesso' : 'Success'}
+                      {tStatus('success')}
                     </span>
                   </div>
                 </div>
@@ -116,7 +142,7 @@ export default async function AdminDashboard({
                 </h3>
                 <p className="text-4xl font-black text-green-600 mb-2">{stats.approved}</p>
                 <p className="text-sm text-green-700 font-medium">
-                  {locale === 'pt' ? 'Publicadas com sucesso' : 'Successfully published'}
+                  {tStatus('publishedSuccessfully')}
                 </p>
               </Card>
             </div>
@@ -130,7 +156,7 @@ export default async function AdminDashboard({
                   </div>
                   <div className="bg-red-200 border-2 border-red-600 rounded-full px-3 py-1">
                     <span className="text-red-800 font-bold text-xs uppercase tracking-wider">
-                      {locale === 'pt' ? 'Rejeitadas' : 'Rejected'}
+                      {tStatus('rejected')}
                     </span>
                   </div>
                 </div>
@@ -139,7 +165,7 @@ export default async function AdminDashboard({
                 </h3>
                 <p className="text-4xl font-black text-red-600 mb-2">{stats.rejected}</p>
                 <p className="text-sm text-red-700 font-medium">
-                  {locale === 'pt' ? 'Não aprovadas' : 'Not approved'}
+                  {tStatus('notApproved')}
                 </p>
               </Card>
             </div>
@@ -149,7 +175,7 @@ export default async function AdminDashboard({
         {/* Enhanced Quick Actions */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            🚀 {locale === 'pt' ? 'Ações Rápidas' : 'Quick Actions'}
+            🚀 {tStatus('quickActions')}
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Review Questions Action Card */}
@@ -161,7 +187,7 @@ export default async function AdminDashboard({
                   </div>
                   <div className="bg-blue-200 border-2 border-blue-600 rounded-full px-4 py-2">
                     <span className="text-blue-800 font-bold text-xs uppercase tracking-wider">
-                      {stats.pending} {locale === 'pt' ? 'Pendentes' : 'Pending'}
+                      {stats.pending} {t('stats.pending')}
                     </span>
                   </div>
                 </div>
@@ -176,7 +202,7 @@ export default async function AdminDashboard({
                   variant="brutal" 
                   className="w-full text-lg font-bold tracking-wide uppercase"
                 >
-                  <a href={`${locale === 'en' ? '' : '/' + locale}/admin/questions`}>
+                  <a href={`/${locale}/admin/questions`}>
                     🔍 {tActions('reviewQuestions')}
                   </a>
                 </Button>
@@ -184,7 +210,7 @@ export default async function AdminDashboard({
             </div>
 
             {/* Manage Admins or Alternative Action Card */}
-            {adminStatus.isRootAdmin ? (
+            {adminStatus.isRootAdmin || adminStatus.canManageAdmins ? (
               <div className="group relative">
                 <Card className="p-8 bg-gradient-to-br from-purple-50 to-pink-50 border-4 border-purple-400 shadow-[8px_8px_0_0_#8b5cf6] hover:shadow-[12px_12px_0_0_#8b5cf6] hover:translate-x-1 hover:translate-y-1 transition-all duration-300">
                   <div className="flex items-start justify-between mb-6">
@@ -193,7 +219,7 @@ export default async function AdminDashboard({
                     </div>
                     <div className="bg-purple-200 border-2 border-purple-600 rounded-full px-4 py-2">
                       <span className="text-purple-800 font-bold text-xs uppercase tracking-wider">
-                        {locale === 'pt' ? 'Admin' : 'Admin'}
+                        Admin
                       </span>
                     </div>
                   </div>
@@ -208,7 +234,7 @@ export default async function AdminDashboard({
                     variant="brutal" 
                     className="w-full text-lg font-bold tracking-wide uppercase bg-purple-500 hover:bg-purple-600"
                   >
-                    <a href={`${locale === 'en' ? '' : '/' + locale}/admin/users`}>
+                    <a href={`/${locale}/admin/users`}>
                       ⚙️ {tActions('manageAdmins')}
                     </a>
                   </Button>
@@ -223,15 +249,15 @@ export default async function AdminDashboard({
                     </div>
                     <div className="bg-gray-200 border-2 border-gray-600 rounded-full px-4 py-2">
                       <span className="text-gray-800 font-bold text-xs uppercase tracking-wider">
-                        {locale === 'pt' ? 'Dados' : 'Analytics'}
+                        {tStatus('analytics')}
                       </span>
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
-                    {locale === 'pt' ? 'Estatísticas' : 'Statistics'}
+                    {tStatus('viewStatistics')}
                   </h3>
                   <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-                    {locale === 'pt' ? 'Visualize relatórios detalhados e métricas do sistema.' : 'View detailed reports and system metrics.'}
+                    {tStatus('detailedReports')}
                   </p>
                   <Button 
                     asChild 
@@ -239,7 +265,7 @@ export default async function AdminDashboard({
                     className="w-full text-lg font-bold tracking-wide uppercase"
                   >
                     <a href="#statistics">
-                      📈 {locale === 'pt' ? 'Ver Estatísticas' : 'View Statistics'}
+                      📈 {tStatus('viewStatistics')}
                     </a>
                   </Button>
                 </Card>
@@ -251,7 +277,7 @@ export default async function AdminDashboard({
         {/* Recent Activity Section */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            📈 {locale === 'pt' ? 'Atividade Recente' : 'Recent Activity'}
+            📈 {tStatus('recentActivity')}
           </h2>
           <Card className="p-8 bg-gradient-to-br from-white to-gray-50 border-4 border-gray-300 shadow-[8px_8px_0_0_#9ca3af]">
             <div className="space-y-4">
@@ -261,10 +287,10 @@ export default async function AdminDashboard({
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900">
-                    {locale === 'pt' ? 'Nova pergunta submetida' : 'New question submitted'}
+                    {tStatus('newQuestionSubmitted')}
                   </p>
                   <p className="text-sm text-gray-600">
-                    {locale === 'pt' ? 'há 2 minutos' : '2 minutes ago'}
+                    há 2 {tStatus('minutesAgo')}
                   </p>
                 </div>
               </div>
@@ -275,10 +301,10 @@ export default async function AdminDashboard({
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900">
-                    {locale === 'pt' ? 'Pergunta aprovada' : 'Question approved'}
+                    {tStatus('questionApproved')}
                   </p>
                   <p className="text-sm text-gray-600">
-                    {locale === 'pt' ? 'há 15 minutos' : '15 minutes ago'}
+                    há 15 {tStatus('minutesAgo')}
                   </p>
                 </div>
               </div>
@@ -289,10 +315,10 @@ export default async function AdminDashboard({
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900">
-                    {locale === 'pt' ? 'Aguarda revisão' : 'Pending review'}
+                    {tStatus('pendingReview')}
                   </p>
                   <p className="text-sm text-gray-600">
-                    {locale === 'pt' ? 'há 1 hora' : '1 hour ago'}
+                    há 1 {tStatus('hourAgo')}
                   </p>
                 </div>
               </div>
@@ -301,5 +327,6 @@ export default async function AdminDashboard({
         </div>
       </div>
     </div>
+    </>
   );
 }

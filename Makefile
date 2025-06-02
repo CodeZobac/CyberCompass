@@ -16,7 +16,7 @@ start:
 	@echo "Waiting for services to start..."
 	@while ! curl -s http://localhost:11434; do sleep 5; done
 	./create-model.sh
-	@echo "Services started. Backend available at http://localhost:3000 and Ollama at http://localhost:11434"
+	@echo "Services started. App available at http://localhost:3000 and Ollama at http://localhost:11434"
 	@echo "Use 'make logs' to follow logs"
 
 # Stop all services

@@ -158,7 +158,54 @@
       "email": "Email Address",
       "add": "Add",
       "rootAdmin": "Root Admin",
-      "regularAdmin": "Regular Admin"
+      "regularAdmin": "Regular Admin",
+      "permissions": "Permissions",
+      "addedBy": "Added By",
+      "createdAt": "Created At",
+      "actions": "Actions",
+      "removeRoot": "Remove Root Admin",
+      "toggleManageAdmins": "Toggle Admin Management",
+      "confirmRemove": "Are you sure you want to remove this admin?",
+      "noAdmins": "No admins found.",
+      "currentAdmins": "Current Admins",
+      "loading": "Loading...",
+      "manageAdminsDesc": "Add or remove admin users and manage permissions.",
+      "errors": {
+        "noPermission": "You don't have permission to manage admins",
+        "userNotFound": "User with this email not found",
+        "alreadyAdmin": "User is already an admin",
+        "emailRequired": "Email address is required",
+        "invalidEmail": "Please enter a valid email address",
+        "addFailed": "Failed to add admin. Please try again.",
+        "removeFailed": "Failed to remove admin. Please try again.",
+        "updateFailed": "Failed to update permissions. Please try again."
+      },
+      "success": {
+        "adminAdded": "Admin added successfully",
+        "adminRemoved": "Admin removed successfully",
+        "permissionsUpdated": "Permissions updated successfully"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "overview": "Overview",
+      "urgent": "Urgent",
+      "success": "Success",
+      "rejected": "Rejected",
+      "requireAttention": "Require attention",
+      "publishedSuccessfully": "Successfully published",
+      "notApproved": "Not approved",
+      "quickActions": "Quick Actions",
+      "recentActivity": "Recent Activity",
+      "analytics": "Analytics",
+      "viewStatistics": "View Statistics",
+      "data": "Data",
+      "detailedReports": "View detailed reports and system metrics.",
+      "newQuestionSubmitted": "New question submitted",
+      "questionApproved": "Question approved",
+      "pendingReview": "Pending review",
+      "minutesAgo": "minutes ago",
+      "hourAgo": "hour ago"
     }
   }
 }
