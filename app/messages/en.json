@@ -91,5 +91,74 @@
       "email": "contact@cybercompass.com",
       "social": "Follow us"
     }
+  },
+  "submitQuestion": {
+    "title": "Submit a Question",
+    "language": "Question Language",
+    "form": {
+      "title": "Question Title",
+      "description": "Question Description",
+      "category": "Category",
+      "options": "Answer Options",
+      "correctAnswer": "Correct Answer",
+      "option": "Option",
+      "submit": "Submit Question",
+      "validation": {
+        "required": "This field is required",
+        "selectCorrect": "Please select the correct answer"
+      }
+    },
+    "success": "Question submitted successfully! It will be reviewed by our team.",
+    "error": "Failed to submit question. Please try again."
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "welcome": "Welcome to the admin panel. Here you can review submitted questions and manage the platform.",
+      "stats": {
+        "pending": "Pending Questions",
+        "approved": "Approved Questions",
+        "rejected": "Rejected Questions"
+      },
+      "actions": {
+        "reviewQuestions": "Review Questions",
+        "reviewQuestionsDesc": "Review and approve submitted questions from users.",
+        "manageAdmins": "Manage Admins",
+        "manageAdminsDesc": "Add or remove admin users and manage permissions."
+      }
+    },
+    "questions": {
+      "title": "Review Questions",
+      "review": "Review Questions",
+      "translate": "Translate",
+      "originalLanguage": "Original Language",
+      "translations": "Translations",
+      "difficulty": "Difficulty",
+      "approve": "Approve & Create Challenge",
+      "reject": "Reject",
+      "submittedBy": "Submitted by",
+      "submittedAt": "Submitted at",
+      "correctAnswer": "Correct Answer",
+      "loading": "Loading...",
+      "noQuestions": "No questions found.",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "translationForm": {
+        "english": "English Translation",
+        "portuguese": "Portuguese Translation"
+      }
+    },
+    "users": {
+      "title": "Manage Admins",
+      "manage": "Manage Admins",
+      "addAdmin": "Add Admin",
+      "removeAdmin": "Remove Admin",
+      "makeRoot": "Make Root Admin",
+      "email": "Email Address",
+      "add": "Add",
+      "rootAdmin": "Root Admin",
+      "regularAdmin": "Regular Admin"
+    }
   }
 }

@@ -10,37 +10,33 @@ import {
   IconSun,
 } from "@intentui/icons"
 import { useTheme } from "next-themes"
-import { signIn, useSession } from "next-auth/react"
-import { useEffect, useState } from "react" // Added useEffect and useState
+import { signIn, signOut, useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 export function HeaderMenu() {
   const { resolvedTheme, setTheme } = useTheme()
   const { data: session } = useSession()
-  const [isAdmin, setIsAdmin] = useState(false)
+  const router = useRouter()
+  const [adminStatus, setAdminStatus] = useState({ isAdmin: false, isRootAdmin: false })
 
+  // Check if user is admin
   useEffect(() => {
-    const checkAdminStatus = async () => {
-      if (session) {
-        try {
-          const response = await fetch('/api/auth/is-admin');
-          if (response.ok) {
-            const data = await response.json();
-            setIsAdmin(data.isAdmin);
-          } else {
-            console.error("Failed to fetch admin status:", response.status);
-            setIsAdmin(false); // Default to false on error
-          }
-        } catch (error) {
-          console.error("Error fetching admin status:", error);
-          setIsAdmin(false); // Default to false on error
-        }
-      } else {
-        setIsAdmin(false); // Not logged in, not an admin
-      }
-    };
-
-    checkAdminStatus();
+    if (session?.user?.id) {
+      fetch('/api/admin/check')
+        .then(res => res.json())
+        .then(data => setAdminStatus(data))
+        .catch(() => setAdminStatus({ isAdmin: false, isRootAdmin: false }));
+    }
   }, [session]);
+
+  const handleSignOut = () => {
+    signOut();
+  };
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
   
   if (!session) {
     return (
@@ -101,21 +97,21 @@ export function HeaderMenu() {
         </Menu.Header>
 
         <Menu.Section>
-          <Menu.Item href="#dashboard">
+          <Menu.Item onAction={() => handleNavigation('#dashboard')}>
             <IconDashboard />
             <Menu.Label>My Quests</Menu.Label>
           </Menu.Item>
-          <Menu.Item href="/submit-challenge">
-            {/* Add an appropriate icon if available, e.g. IconPlus or IconUpload */}
-            <Menu.Label>Submit Questions</Menu.Label> 
+          <Menu.Item onAction={() => handleNavigation('/submit-question')}>
+            <IconSettings />
+            <Menu.Label>Submit Question</Menu.Label>
           </Menu.Item>
-          {isAdmin && (
-            <Menu.Item href="/admin/challenges">
-              {/* Add an appropriate icon if available, e.g., IconShieldLock or IconSettingsCog */}
+          {adminStatus.isAdmin && (
+            <Menu.Item onAction={() => handleNavigation('/admin')}>
+              <IconSettings />
               <Menu.Label>Admin Panel</Menu.Label>
             </Menu.Item>
           )}
-          <Menu.Item href="#settings">
+          <Menu.Item onAction={() => handleNavigation('#settings')}>
             <IconSettings />
             <Menu.Label>Profile</Menu.Label>
           </Menu.Item>
@@ -139,11 +135,11 @@ export function HeaderMenu() {
             </Menu.Item>
           </Menu.Content>
         </Menu.Submenu>
-        <Menu.Item href="#contact-s">
+        <Menu.Item onAction={() => handleNavigation('#contact-s')}>
           <Menu.Label>Contact Support</Menu.Label>
         </Menu.Item>
         <Menu.Separator />
-        <Menu.Item href="#logout">
+        <Menu.Item onAction={handleSignOut}>
           <IconLogout />
           <Menu.Label>Log out</Menu.Label>
         </Menu.Item>

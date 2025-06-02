@@ -58,8 +58,8 @@
     "button": "Iniciar o seu Desafio Cibernético"
   },
   "dialog": {
-    "title": "Escolha o seu Desafio",
-    "description": "Selecione um tipo de desafio para testar as suas competências de consciência cibernética em diferentes cenários.",
+    "title": "Escolha o Seu Desafio",
+    "description": "Selecione um tipo de desafio para testar as suas competências de cibersegurança em diferentes cenários.",
     "cancel": "Cancelar",
     "random": "Desafio Aleatório"
   },
@@ -86,6 +86,75 @@
     "contact": {
       "email": "contacto@cybercompass.com",
       "social": "Siga-nos"
+    }
+  },
+  "submitQuestion": {
+    "title": "Submeter uma Pergunta",
+    "language": "Idioma da Pergunta",
+    "form": {
+      "title": "Título da Pergunta",
+      "description": "Descrição da Pergunta",
+      "category": "Categoria",
+      "options": "Opções de Resposta",
+      "correctAnswer": "Resposta Correta",
+      "option": "Opção",
+      "submit": "Submeter Pergunta",
+      "validation": {
+        "required": "Este campo é obrigatório",
+        "selectCorrect": "Por favor selecione a resposta correta"
+      }
+    },
+    "success": "Pergunta submetida com sucesso! Será revista pela nossa equipa.",
+    "error": "Falha ao submeter pergunta. Tente novamente."
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Painel de Administração",
+      "welcome": "Bem-vindo ao painel de administração. Aqui pode rever perguntas submetidas e gerir a plataforma.",
+      "stats": {
+        "pending": "Perguntas Pendentes",
+        "approved": "Perguntas Aprovadas",
+        "rejected": "Perguntas Rejeitadas"
+      },
+      "actions": {
+        "reviewQuestions": "Rever Perguntas",
+        "reviewQuestionsDesc": "Rever e aprovar perguntas submetidas pelos utilizadores.",
+        "manageAdmins": "Gerir Administradores",
+        "manageAdminsDesc": "Adicionar ou remover utilizadores admin e gerir permissões."
+      }
+    },
+    "questions": {
+      "title": "Rever Perguntas",
+      "review": "Rever Perguntas",
+      "translate": "Traduzir",
+      "originalLanguage": "Idioma Original",
+      "translations": "Traduções",
+      "difficulty": "Dificuldade",
+      "approve": "Aprovar e Criar Desafio",
+      "reject": "Rejeitar",
+      "submittedBy": "Submetido por",
+      "submittedAt": "Submetido em",
+      "correctAnswer": "Resposta Correta",
+      "loading": "A carregar...",
+      "noQuestions": "Nenhuma pergunta encontrada.",
+      "pending": "Pendentes",
+      "approved": "Aprovadas",
+      "rejected": "Rejeitadas",
+      "translationForm": {
+        "english": "Tradução em Inglês",
+        "portuguese": "Tradução em Português"
+      }
+    },
+    "users": {
+      "title": "Gerir Administradores",
+      "manage": "Gerir Administradores",
+      "addAdmin": "Adicionar Administrador",
+      "removeAdmin": "Remover Administrador",
+      "makeRoot": "Tornar Administrador Principal",
+      "email": "Endereço de Email",
+      "add": "Adicionar",
+      "rootAdmin": "Administrador Principal",
+      "regularAdmin": "Administrador Regular"
     }
   }
 }
