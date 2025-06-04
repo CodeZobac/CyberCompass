@@ -4,7 +4,7 @@
 export async function generateOllamaResponse(
   prompt: string,
   locale: string, // Added locale parameter (e.g., 'en', 'pt')
-  model: string = 'cyber-compass'
+  model: string = 'cyber-compass:latest'
 ): Promise<string> {
   try {
     // Base system prompt content (similar to what's in Modelfile's SYSTEM block)

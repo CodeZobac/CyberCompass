@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateOllamaResponse } from '@lib/ollama';
+import { generateOllamaResponse } from '@lib/gemini';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare prompt for Ollama
+    // Prepare prompt for Gemini
     const prompt = `
 Challenge: ${challengeTitle || 'Cyber security challenge'}
 ${challengeDescription ? `Description: ${challengeDescription}` : ''}
@@ -27,8 +27,8 @@ If incorrect, explain why the correct answer is better. Keep the explanation edu
 Limit your response to 3-4 sentences maximum.
 `;
 
-    // Connect to Ollama using the utility function, now passing locale
-    const feedbackText = await generateOllamaResponse(prompt, locale); 
+    // Connect to Gemini using the utility function, now passing locale
+    const feedbackText = await generateOllamaResponse(prompt, locale);
     
     return NextResponse.json({ 
       feedback: feedbackText || 'No feedback available at this time.' 
