@@ -13,6 +13,7 @@ Cyber Compass is an educational platform focused on teaching cyber ethics throug
   - [Setting up Docker and Docker Compose](#setting-up-docker-and-docker-compose)
   - [Setting up NVIDIA Container Toolkit](#setting-up-nvidia-container-toolkit)
 - [Running the Application](#running-the-application)
+  - [Port Conflict Disclaimer](#port-conflict-disclaimer)
 - [Project Structure](#project-structure)
 - [AI Model](#ai-model)
 - [Multilingual Support](#multilingual-support)
@@ -176,6 +177,107 @@ make clean
 Once started, the application will be available at:
 - Web application: http://localhost:3000
 - Ollama AI service: http://localhost:11434
+
+### Port Conflict Disclaimer
+
+If you encounter the following error when running `make start`:
+
+```
+Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint cybercompass-ai-service-1 (e4d0462277da1eade52e5cb85ad4404767e8f1de2f77a43a561681789c486287): Bind for 0.0.0.0:11434 failed: port is already allocated
+make: *** [Makefile:43: start] Error 1
+```
+
+This error occurs when port 11434 is already in use by another Ollama instance running on your system. The port conflict can be caused by either a system-wide Ollama installation or another Docker container using the same port.
+
+#### Diagnostic Step
+
+First, identify what's using port 11434:
+
+```bash
+sudo lsof -i :11434
+```
+
+If you see output like this, it means Docker containers are using the port:
+```
+COMMAND     PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+docker-pr 61032 root    7u  IPv4 615400      0t0  TCP *:11434 (LISTEN)
+docker-pr 61038 root    7u  IPv6 615401      0t0  TCP *:11434 (LISTEN)
+```
+
+#### Resolution Steps
+
+**For System-wide Ollama Installation:**
+
+1. **Stop the Ollama service:**
+   ```bash
+   sudo systemctl stop ollama
+   ```
+
+2. **Disable it from starting automatically (optional):**
+   ```bash
+   sudo systemctl disable ollama
+   ```
+
+3. **Or kill any Ollama processes:**
+   ```bash
+   pkill ollama
+   ```
+
+**For Docker Container Conflicts:**
+
+1. **List all running containers:**
+   ```bash
+   docker ps
+   ```
+
+2. **Stop containers using port 11434 (replace with actual container name/ID from `docker ps`):**
+   ```bash
+   docker stop container_name_or_id
+   ```
+
+3. **Or stop all containers if needed:**
+   ```bash
+   docker stop $(docker ps -q)
+   ```
+
+4. **Remove containers if they're not needed (replace with actual container name/ID):**
+   ```bash
+   docker rm container_name_or_id
+   ```
+
+**For Docker Compose conflicts:**
+
+1. **Stop any other Docker Compose projects that might be using Ollama:**
+   ```bash
+   docker compose down
+   ```
+
+2. **In other project directories, check for running services:**
+   ```bash
+   cd /path/to/other/project && docker compose ps
+   ```
+
+#### Final Verification
+
+1. **Verify port 11434 is free:**
+   ```bash
+   sudo lsof -i :11434
+   ```
+
+2. **If the port is still occupied, forcefully kill the process using the PID from the lsof output:**
+   ```bash
+   sudo kill -9 61032
+   sudo kill -9 61038
+   ```
+   
+   Replace `61032` and `61038` with the actual PIDs shown in your `lsof` output.
+
+3. **Start the CyberCompass application:**
+   ```bash
+   make start
+   ```
+
+**Note:** The containerized Ollama service in this project needs exclusive access to port 11434 to function properly. Make sure no other Ollama instances (system-wide or containerized) are running before starting this application.
 
 ## Project Structure
 
