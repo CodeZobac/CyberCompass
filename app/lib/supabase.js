@@ -4,11 +4,22 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Use service role key
 
+// During build time, use placeholder values to prevent build errors
+const isDuringBuild = process.env.NODE_ENV === 'production' && !supabaseUrl;
+
 if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables');
+  if (isDuringBuild) {
+    // Use placeholder values during build
+    console.warn('Using placeholder Supabase values during build');
+  } else {
+    throw new Error('Missing Supabase environment variables');
+  }
 }
 
 // Service role bypasses RLS
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseServiceKey || 'placeholder-key'
+);
 
 export { supabase };

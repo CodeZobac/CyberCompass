@@ -5,8 +5,9 @@ import { supabase } from '@lib/supabase.js';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const session = await getServerSession(authOptions);
     
@@ -40,7 +41,7 @@ export async function POST(
     const { data: pendingChallenge, error: fetchError } = await supabase
       .from('pending_challenges')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .eq('status', 'pending')
       .single();
 
@@ -113,7 +114,7 @@ export async function POST(
     }
 
     // Create options internationalization
-    const optionsI18n = [];
+    const optionsI18n: Array<{ option_id: string; locale: string; content: string }> = [];
     challengeOptions.forEach((dbOption, index) => {
       const originalOption = options[index];
       const optionEn = pendingChallenge.submitted_language === 'en' ? originalOption.content : translatedOptions?.en[index];
@@ -156,7 +157,7 @@ export async function POST(
         translated_options: translatedOptions,
         assigned_difficulty: difficulty
       })
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (updateError) {
       console.error('Error updating pending challenge:', updateError);

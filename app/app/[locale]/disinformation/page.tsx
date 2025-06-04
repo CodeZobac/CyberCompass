@@ -6,10 +6,13 @@ import ListChallenges from '@/components/ListChallenges';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+// Force dynamic rendering to avoid build-time execution
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 }
 
 async function DisinformationChallenges({ locale }: { locale: string }) {
@@ -29,7 +32,9 @@ async function DisinformationChallenges({ locale }: { locale: string }) {
   );
 }
 
-export default function DisinformationPage({ params: { locale } }: PageProps) {
+export default async function DisinformationPage({ params }: PageProps) {
+  const { locale } = await params;
+  
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading challenges...</div>}>
       <DisinformationChallenges locale={locale} />

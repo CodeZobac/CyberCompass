@@ -7,6 +7,9 @@ import { Button } from '../../components/ui/button';
 import { supabase } from '../../../lib/supabase.js';
 import Header from '../../components/Header';
 
+// Force dynamic rendering to avoid build-time execution
+export const dynamic = 'force-dynamic';
+
 // Check admin status by querying the Supabase admin_users table
 async function checkAdminStatus(userId: string) {
   try {

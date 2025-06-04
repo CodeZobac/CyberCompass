@@ -1,6 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+// Force dynamic rendering to avoid build-time execution
+export const dynamic = 'force-dynamic';
+
+import { useEffect, useState, useCallback } from 'react';
 import { Card } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { useParams } from 'next/navigation';
@@ -68,11 +71,7 @@ export default function AdminQuestions() {
     }
   };
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [selectedStatus]);
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/admin/questions?status=${selectedStatus}`);
@@ -86,7 +85,11 @@ export default function AdminQuestions() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedStatus]);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [selectedStatus, fetchQuestions]);
 
   const openReviewModal = (question: PendingChallenge) => {
     setReviewModal({

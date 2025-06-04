@@ -3,6 +3,7 @@
 import { HeaderMenu } from "./HeaderMenu";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
@@ -10,7 +11,7 @@ const Header = () => {
 
     return (
         <header className="bg-bg text-white p-4 shadow-md border-b border-gray-700/30 flex justify-between items-center">
-			<a href="/">
+<Link href="/">
             <div className="flex items-center">
                 <Image
                     src="/logo-animated.gif"
@@ -35,7 +36,7 @@ const Header = () => {
                     />
                 )}
             </div>
-			</a>
+</Link>
             <div className="flex items-center px-4 mr-24">
                 <HeaderMenu />
                 <LanguageSwitcher />
