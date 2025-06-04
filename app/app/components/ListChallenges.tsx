@@ -3,10 +3,6 @@
 import React, { useState } from 'react';
 import { Challenge } from '@lib/types';
 import { useParams } from 'next/navigation';
-import { 
-  ResizablePanelGroup, 
-  ResizablePanel
-} from '@/components/ui/resizable';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { RenderChallenge } from '@/components/RenderChallenge';
@@ -34,94 +30,134 @@ export default function ListChallenges({ challenges, userId, categoryName }: Lis
   const getDifficultyColors = (difficulty: number) => {
     switch(difficulty) {
       case 1: return {
-        bg: 'bg-green-100',
-        text: 'text-green-800',
-        hoverBg: 'hover:bg-green-50'
+        bg: 'bg-green-600',
+        text: 'text-white',
+        label: 'EASY'
       };
       case 2: return {
-        bg: 'bg-yellow-100',
-        text: 'text-yellow-800',
-        hoverBg: 'hover:bg-yellow-50'
+        bg: 'bg-yellow-600',
+        text: 'text-black',
+        label: 'MEDIUM'
       };
       case 3: return {
-        bg: 'bg-red-100',
-        text: 'text-red-800',
-        hoverBg: 'hover:bg-red-50'
+        bg: 'bg-red-600',
+        text: 'text-white',
+        label: 'HARD'
       };
       default: return {
-        bg: 'bg-gray-100',
-        text: 'text-gray-800',
-        hoverBg: 'hover:bg-gray-50'
+        bg: 'bg-gray-600',
+        text: 'text-white',
+        label: 'UNKNOWN'
       };
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">{categoryName} Challenges</h1>
-      
+    <div className="min-h-screen bg-white">
       {selectedChallenge ? (
-        <>
+        // Selected Challenge View
+        <div className="container mx-auto px-6 py-8">
           <Button 
-            variant="outline" 
             onClick={handleBackToList} 
-            className="mb-4 border-2 border-black"
+            className="mb-8 bg-white text-black border-6 border-black hover:bg-black hover:text-white font-bold text-lg px-8 py-4 shadow-[8px_8px_0px_0px_#000000] hover:shadow-[4px_4px_0px_0px_#000000] transform hover:translate-x-1 hover:translate-y-1 transition-all duration-200"
           >
-            ← Back to Challenge List
+            ← BACK TO CHALLENGES
           </Button>
           <RenderChallenge 
             challenges={[selectedChallenge]} 
             userId={userId} 
           />
-        </>
+        </div>
       ) : (
-        <div className="max-w-5xl mx-auto">
-          <div className="p-6 mb-6 bg-black text-white rounded-lg shadow-md border-2 border-black">
-            <h2 className="text-2xl font-bold mb-2">Select a Challenge</h2>
-            <p className="text-gray-300">
-              Choose a challenge from the list below to begin your learning journey.
-              Each challenge is designed to test and strengthen your knowledge.
-            </p>
+        // Challenge Selection View
+        <div>
+          {/* Hero Section */}
+          <div className="bg-white text-black py-16 border-b-6 border-black">
+            <div className="container mx-auto px-6 text-center">
+              <h1 className="text-6xl md:text-8xl font-black uppercase mb-6 text-red-500 text-shadow-[6px_6px_0px_#000000]">
+                {categoryName}
+              </h1>
+              <h2 className="text-2xl md:text-4xl font-bold uppercase mb-4 text-black text-shadow-[3px_3px_0px_#ffffff]">
+                CHALLENGES
+              </h2>
+              <div className="bg-black text-white p-6 inline-block border-4 border-black shadow-[12px_12px_0px_0px_#ff0000] mt-8">
+                <p className="text-xl font-bold uppercase">
+                  {challenges.length} CHALLENGE{challenges.length !== 1 ? 'S' : ''} AVAILABLE
+                </p>
+              </div>
+            </div>
           </div>
 
-          <ResizablePanelGroup 
-            direction="vertical" 
-            className="min-h-[500px] max-h-[700px] border-2 border-black rounded-lg overflow-hidden"
-          >
-            <ResizablePanel defaultSize={30} minSize={20}>
-              <div className="p-4 h-full overflow-auto bg-bg align-center">
-                <h2 className="text-xl font-semibold mb-4 border-b-2 border-black pb-2">Available Challenges</h2>
-                <div className="space-y-3">
-                  {challenges.map((challenge) => {
-                    const colors = getDifficultyColors(challenge.difficulty as number);
-                    return (
-                      <Card 
-                        key={challenge.id}
-                        className={`p-5 cursor-pointer border-2 border-black 
-                          transition-colors ${colors.hoverBg} mb-4`}
-                        onClick={() => handleSelectChallenge(challenge)}
-                      >
-                        <h3 className="font-bold text-lg">
-                          {challenge.i18n?.[locale]?.title || challenge.title}
-                        </h3>
-                        {challenge.difficulty && (
-                          <div className="mt-3 text-sm">
-                            <span className={`
-                              px-3 py-1.5 rounded-full ${colors.bg} ${colors.text}
-                            `}>
-                              {challenge.difficulty === 1 ? 'Easy' : 
-                              challenge.difficulty === 2 ? 'Medium' : 
-                              challenge.difficulty === 3 ? 'Hard' : 'Unknown'}
-                            </span>
-                          </div>
-                        )}
-                      </Card>
-                    )}
-                  )}
+          {/* Instructions Section */}
+          <div className="bg-white py-16">
+            <div className="container mx-auto px-6">
+              <div className="max-w-4xl mx-auto text-center mb-16">
+                <div className="bg-red-600 text-white p-8 border-6 border-black shadow-[12px_12px_0px_0px_#000000]">
+                  <h3 className="text-3xl font-black uppercase mb-4">SELECT YOUR CHALLENGE</h3>
+                  <p className="text-xl font-bold">
+                    Choose a challenge below to test your cybersecurity knowledge and skills.
+                    Each challenge is designed to strengthen your digital defense capabilities.
+                  </p>
                 </div>
               </div>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+
+              {/* Challenge Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                {challenges.map((challenge) => {
+                  const colors = getDifficultyColors(challenge.difficulty as number);
+                  return (
+                    <Card 
+                      key={challenge.id}
+                      className="bg-white border-6 border-black shadow-[12px_12px_0px_0px_#000000] hover:shadow-[6px_6px_0px_0px_#000000] transform hover:translate-x-2 hover:translate-y-2 transition-all duration-200 cursor-pointer p-0 overflow-hidden"
+                      onClick={() => handleSelectChallenge(challenge)}
+                    >
+                      {/* Difficulty Badge */}
+                      <div className={`${colors.bg} ${colors.text} p-4 border-b-4 border-black`}>
+                        <div className="text-center">
+                          <span className="text-lg font-black uppercase tracking-wider">
+                            {colors.label}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Challenge Content */}
+                      <div className="p-6">
+                        <h3 className="text-2xl font-black uppercase mb-4 text-black leading-tight">
+                          {challenge.i18n?.[locale]?.title || challenge.title}
+                        </h3>
+                        
+                        {challenge.i18n?.[locale]?.description && (
+                          <p className="text-gray-700 font-semibold text-sm leading-relaxed">
+                            {challenge.i18n[locale].description.slice(0, 120)}
+                            {challenge.i18n[locale].description.length > 120 ? '...' : ''}
+                          </p>
+                        )}
+
+                        {/* Action Indicator */}
+                        <div className="mt-6 pt-4 border-t-2 border-black">
+                          <div className="bg-black text-white px-4 py-2 inline-block font-bold uppercase text-sm">
+                            START CHALLENGE →
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Bottom CTA */}
+              {challenges.length === 0 && (
+                <div className="text-center mt-16">
+                  <div className="bg-gray-100 border-6 border-black p-8 inline-block shadow-[8px_8px_0px_0px_#000000]">
+                    <h3 className="text-2xl font-black uppercase mb-2">NO CHALLENGES AVAILABLE</h3>
+                    <p className="text-lg font-bold text-gray-700">
+                      Check back soon for new cybersecurity challenges!
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

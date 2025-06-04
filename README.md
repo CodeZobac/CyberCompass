@@ -9,8 +9,9 @@ Cyber Compass is an educational platform focused on teaching cyber ethics throug
 - [Technology Stack](#technology-stack)
 - [Prerequisites](#prerequisites)
 - [Installation and Setup](#installation-and-setup)
+  - [Installing Make](#installing-make)
+  - [Setting up Docker and Docker Compose](#setting-up-docker-and-docker-compose)
   - [Setting up NVIDIA Container Toolkit](#setting-up-nvidia-container-toolkit)
-  - [Docker and Docker Compose Setup](#docker-and-docker-compose-setup)
 - [Running the Application](#running-the-application)
 - [Project Structure](#project-structure)
 - [AI Model](#ai-model)
@@ -46,6 +47,7 @@ Cyber Compass is a web application that presents users with ethical dilemmas rel
 
 Before you begin, ensure you have the following installed:
 
+- [Make](https://www.gnu.org/software/make/) (for running setup scripts)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [NVIDIA GPU](https://www.nvidia.com/) (recommended for optimal AI performance)
@@ -53,12 +55,60 @@ Before you begin, ensure you have the following installed:
 
 ## Installation and Setup
 
-### Setting up NVIDIA Container Toolkit
+### Installing Make
 
-If you have an NVIDIA GPU, you'll need to set up the NVIDIA Container Toolkit to enable GPU acceleration for the AI model. Run:
+**Official Make Installation for Ubuntu/Debian:**
 
 ```bash
-make setup
+# Update package index
+sudo apt-get update
+
+# Install build-essential which includes make
+sudo apt-get install -y build-essential
+
+# Verify installation
+make --version
+```
+
+**Alternative installation methods:**
+
+For other Linux distributions:
+- **CentOS/RHEL/Fedora**: `sudo yum install make` or `sudo dnf install make`
+- **Arch Linux**: `sudo pacman -S make`
+- **macOS**: Install Xcode command line tools: `xcode-select --install`
+- **Windows**: Install via [Chocolatey](https://chocolatey.org/): `choco install make`
+
+### Setting up Docker and Docker Compose
+
+**Automated Setup (Recommended):**
+
+Use our automated setup script that follows Docker's official installation method:
+
+```bash
+make setup_docker
+```
+
+This command will:
+1. Update package index
+2. Install prerequisites (apt-transport-https, ca-certificates, curl, gnupg, lsb-release)
+3. Add Docker's official GPG key
+4. Set up the stable Docker repository
+5. Install Docker Engine, CLI, and containerd
+6. Install Docker Compose Plugin (official method)
+7. Add current user to docker group
+
+**Important:** After running this command, you must log out and log back in for the docker group changes to take effect.
+
+**Manual Installation:**
+
+If you prefer to install manually, follow the [official Docker installation guide](https://docs.docker.com/engine/install/ubuntu/) for your operating system.
+
+### Setting up NVIDIA Container Toolkit
+
+If you have an NVIDIA GPU, you'll need to set up the NVIDIA Container Toolkit to enable GPU acceleration for the AI model:
+
+```bash
+make setup_nvidia
 ```
 
 This command will:
@@ -66,8 +116,10 @@ This command will:
 2. Add the NVIDIA Container Toolkit repository
 3. Update package lists
 4. Install the NVIDIA Container Toolkit
+5. Configure Docker daemon for NVIDIA runtime
+6. Restart Docker service
 
-### Docker and Docker Compose Setup
+### Project Setup
 
 1. Clone this repository:
 ```bash
@@ -164,7 +216,9 @@ npm run dev
 
 ## Troubleshooting
 
-- **GPU Not Detected**: Ensure you have the latest NVIDIA drivers installed and that the NVIDIA Container Toolkit is properly configured.
+- **Make Command Not Found**: Install make using the instructions in the [Installing Make](#installing-make) section.
+- **Docker Permission Denied**: Ensure you've logged out and logged back in after running `make setup_docker` to apply docker group membership.
+- **GPU Not Detected**: Ensure you have the latest NVIDIA drivers installed and that the NVIDIA Container Toolkit is properly configured with `make setup_nvidia`.
 - **Services Not Starting**: Check logs with `make logs` to identify any startup issues.
 - **Model Creation Failing**: Ensure your system has enough resources (RAM and GPU memory) for the AI model.
 

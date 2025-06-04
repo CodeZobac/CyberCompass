@@ -113,7 +113,6 @@
     --radius-4xl: calc(var(--radius-lg) * 3);
   }
 
-
 }
 
 @layer base {
@@ -157,5 +156,48 @@
   ::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 4px;
+  }
+}
+
+/* Brutalist Design Utilities */
+@layer utilities {
+  .border-6 {
+    border-width: 6px;
+  }
+
+  .text-shadow-\[6px_6px_0px_\#ffffff\] {
+    text-shadow: 6px 6px 0px #ffffff;
+  }
+
+  .text-shadow-\[3px_3px_0px_\#000000\] {
+    text-shadow: 3px 3px 0px #000000;
+  }
+
+  .shadow-\[12px_12px_0px_0px_\#ff0000\] {
+    box-shadow: 12px 12px 0px 0px #ff0000;
+  }
+
+  .shadow-\[12px_12px_0px_0px_\#000000\] {
+    box-shadow: 12px 12px 0px 0px #000000;
+  }
+
+  .shadow-\[8px_8px_0px_0px_\#000000\] {
+    box-shadow: 8px 8px 0px 0px #000000;
+  }
+
+  .shadow-\[6px_6px_0px_0px_\#000000\] {
+    box-shadow: 6px 6px 0px 0px #000000;
+  }
+
+  .shadow-\[4px_4px_0px_0px_\#000000\] {
+    box-shadow: 4px 4px 0px 0px #000000;
+  }
+
+  .hover\:shadow-\[6px_6px_0px_0px_\#000000\]:hover {
+    box-shadow: 6px 6px 0px 0px #000000;
+  }
+
+  .hover\:shadow-\[4px_4px_0px_0px_\#000000\]:hover {
+    box-shadow: 4px 4px 0px 0px #000000;
   }
 }

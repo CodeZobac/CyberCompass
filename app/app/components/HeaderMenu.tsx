@@ -5,17 +5,13 @@ import { Menu } from "./ui/menu"
 import {
   IconDashboard,
   IconLogout,
-  IconMoon,
   IconSettings,
-  IconSun,
 } from "@intentui/icons"
-import { useTheme } from "next-themes"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 export function HeaderMenu() {
-  const { resolvedTheme, setTheme } = useTheme()
   const { data: session } = useSession()
   const router = useRouter()
   const [adminStatus, setAdminStatus] = useState({ isAdmin: false, isRootAdmin: false })
@@ -53,25 +49,6 @@ export function HeaderMenu() {
             <span className="block">Guest</span>
             <span className="font-normal text-muted-fg">Not signed in</span>
           </Menu.Header>
-
-          <Menu.Submenu>
-            <Menu.Item>
-              {resolvedTheme === "light" ? (
-                <IconSun />
-              ) : (
-                <IconMoon />
-              )}
-              <Menu.Label>Switch Theme</Menu.Label>
-            </Menu.Item>
-            <Menu.Content>
-              <Menu.Item onAction={() => setTheme("dark")}>
-                <IconMoon /> Dark
-              </Menu.Item>
-              <Menu.Item onAction={() => setTheme("light")}>
-                <IconSun /> Light
-              </Menu.Item>
-            </Menu.Content>
-          </Menu.Submenu>
           <Menu.Separator />
           <Menu.Item onAction={() => signIn("google")}>
             <span className="menu-label">Sign In / Register</span>
@@ -117,24 +94,6 @@ export function HeaderMenu() {
           </Menu.Item>
         </Menu.Section>
         <Menu.Separator />
-        <Menu.Submenu>
-          <Menu.Item>
-            {resolvedTheme === "light" ? (
-              <IconSun />
-            ) : (
-              <IconMoon />
-            )}
-            <Menu.Label>Switch Theme</Menu.Label>
-          </Menu.Item>
-          <Menu.Content>
-            <Menu.Item onAction={() => setTheme("dark")}>
-              <IconMoon /> Dark
-            </Menu.Item>
-            <Menu.Item onAction={() => setTheme("light")}>
-              <IconSun /> Light
-            </Menu.Item>
-          </Menu.Content>
-        </Menu.Submenu>
         <Menu.Item onAction={() => handleNavigation('#contact-s')}>
           <Menu.Label>Contact Support</Menu.Label>
         </Menu.Item>
