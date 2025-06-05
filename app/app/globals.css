@@ -60,6 +60,9 @@
 
 @layer base {
   :root {
+    /* Force light theme regardless of system preference */
+    color-scheme: light only;
+    
     --bg: var(--color-white);
     --fg: var(--color-zinc-950);
 
@@ -111,6 +114,50 @@
     --radius-2xl: calc(var(--radius-lg) * 1.5);
     --radius-3xl: calc(var(--radius-lg) * 2);
     --radius-4xl: calc(var(--radius-lg) * 3);
+  }
+
+  /* Override any dark mode preferences */
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"],
+  html[data-theme="light"],
+  html[data-theme="dark"] {
+    color-scheme: light only !important;
+    
+    --bg: var(--color-white) !important;
+    --fg: var(--color-zinc-950) !important;
+    --secondary: var(--color-zinc-100) !important;
+    --secondary-fg: var(--color-zinc-950) !important;
+    --overlay: var(--color-white) !important;
+    --overlay-fg: var(--color-zinc-950) !important;
+    --muted: var(--color-zinc-100) !important;
+    --border: var(--color-zinc-200) !important;
+    --input: var(--color-zinc-300) !important;
+    --navbar: var(--color-zinc-50) !important;
+    --navbar-fg: var(--color-zinc-950) !important;
+    --sidebar: var(--color-zinc-50) !important;
+    --sidebar-fg: var(--color-zinc-950) !important;
+  }
+
+  /* Prevent system dark mode from affecting colors */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: light only !important;
+      
+      --bg: var(--color-white) !important;
+      --fg: var(--color-zinc-950) !important;
+      --secondary: var(--color-zinc-100) !important;
+      --secondary-fg: var(--color-zinc-950) !important;
+      --overlay: var(--color-white) !important;
+      --overlay-fg: var(--color-zinc-950) !important;
+      --muted: var(--color-zinc-100) !important;
+      --border: var(--color-zinc-200) !important;
+      --input: var(--color-zinc-300) !important;
+      --navbar: var(--color-zinc-50) !important;
+      --navbar-fg: var(--color-zinc-950) !important;
+      --sidebar: var(--color-zinc-50) !important;
+      --sidebar-fg: var(--color-zinc-950) !important;
+    }
   }
 
 }

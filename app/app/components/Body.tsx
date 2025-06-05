@@ -263,7 +263,7 @@ export default function Body() {
             {cyberthreats.map((threat) => (
               <div 
                 key={threat.title}
-                className="flex flex-col items-center cursor-pointer border-2 border-black p-4 hover:bg-muted/30 transition-colors rounded-sm shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:shadow-[4px_4px_0_0_#fff] dark:hover:shadow-none"
+                className="flex flex-col items-center cursor-pointer border-2 border-black p-4 hover:bg-muted/30 transition-colors rounded-sm shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
                 onClick={() => {
                   setShowDialog(false);
                   router.push(`/${threat.title.toLowerCase()}`);

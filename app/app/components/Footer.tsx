@@ -17,7 +17,7 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="lg:col-span-2">
                         <div className="flex items-center mb-6">
-                            <div className="mr-4 p-2 bg-white rounded-lg border-2 border-border shadow-[4px_4px_0_0_#000] dark:shadow-[4px_4px_0_0_#fff]">
+                            <div className="mr-4 p-2 bg-white rounded-lg border-2 border-border shadow-[4px_4px_0_0_#000]#fff]">
                                 <Image
                                     src="/logo-footer.jpg"
                                     alt="ERASMUS Project - CyberCompass Footer Logo"
@@ -129,7 +129,7 @@ const Footer = () => {
                         <div className="mt-6 flex space-x-4">
                             <a 
                                 href="#" 
-                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000] dark:shadow-[2px_2px_0_0_#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000]#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                                 aria-label="Twitter"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@ const Footer = () => {
                             </a>
                             <a 
                                 href="#" 
-                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000] dark:shadow-[2px_2px_0_0_#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000]#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                                 aria-label="LinkedIn"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -147,7 +147,7 @@ const Footer = () => {
                             </a>
                             <a 
                                 href="#" 
-                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000] dark:shadow-[2px_2px_0_0_#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                                className="w-10 h-10 bg-muted/50 rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors duration-200 border-2 border-border shadow-[2px_2px_0_0_#000]#fff] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                                 aria-label="GitHub"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

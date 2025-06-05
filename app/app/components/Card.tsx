@@ -31,7 +31,7 @@ export function RetroCard({ className, children, ...props }: RetroCardProps) {
   return (
     <UICard 
       className={cn(
-        "w-full max-w-[380px] border-4 border-black dark:border-white transition-all dark:bg-zinc-900", 
+        "w-full max-w-[380px] border-4 border-black transition-all", 
         className
       )} 
       {...props}
@@ -90,7 +90,7 @@ export function CardDemo() {
         <RetroCardDescription>You have 3 unread messages.</RetroCardDescription>
       </RetroCardHeader>
       <RetroCardContent className="grid gap-4">
-        <div className="w-full flex items-center space-x-4 rounded-sm border border-black dark:border-white border-2 p-4">
+        <div className="w-full flex items-center space-x-4 rounded-sm border border-black border-2 p-4">
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
               Push Notifications
@@ -104,7 +104,7 @@ export function CardDemo() {
           {notifications.map((notification, index) => (
             <div
               key={index}
-              className="mb-4 grid grid-cols-[25px_1fr] items-start p-4 border-2 border-black dark:border-white transition-all dark:bg-zinc-900"
+              className="mb-4 grid grid-cols-[25px_1fr] items-start p-4 border-2 border-black transition-all"
             >
               <span className="flex size-2 translate-y-1 rounded-full bg-sky-500" />
               <div className="space-y-1">
