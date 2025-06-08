@@ -3,22 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { createQueryClient } from '@lib/react-query';
 
 interface QueryProviderProps {
   children: React.ReactNode;
 }
 
-// Create a stable query client instance
-let globalQueryClient: ReturnType<typeof createQueryClient> | undefined = undefined;
-
-const getQueryClient = () => {
-  if (!globalQueryClient) {
-    globalQueryClient = createQueryClient();
-  }
-  return globalQueryClient;
-};
 
 export function QueryProvider({ children }: QueryProviderProps) {
   const [queryClient] = useState(() => createQueryClient());
@@ -26,41 +16,13 @@ export function QueryProvider({ children }: QueryProviderProps) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Create storage persister
-      const persister = createSyncStoragePersister({
-        storage: {
-          getItem: (key: string) => {
-            try {
-              return localStorage.getItem(key);
-            } catch {
-              return null;
-            }
-          },
-          setItem: (key: string, value: string) => {
-            try {
-              localStorage.setItem(key, value);
-            } catch {
-              // Silently fail
-            }
-          },
-          removeItem: (key: string) => {
-            try {
-              localStorage.removeItem(key);
-            } catch {
-              // Silently fail
-            }
-          },
-        },
-        key: 'cybercompass-query-cache',
-      });
-
       // Restore cache from storage
       const restoreCache = async () => {
         try {
           const storedData = localStorage.getItem('cybercompass-query-cache');
           if (storedData) {
             const parsedData = JSON.parse(storedData);
-            queryClient.setQueryData(['progress'], parsedData.queries?.find((q: any) => 
+            queryClient.setQueryData(['progress'], parsedData.queries?.find((q: { queryKey?: string[]; state?: { data?: unknown } }) => 
               q.queryKey?.[0] === 'progress'
             )?.state?.data || []);
           }

@@ -154,15 +154,11 @@ export function StatusIndicator({
 }
 
 interface ProgressIndicatorProps {
-  challengeId?: string;
-  userId?: string;
   progress?: number;
   className?: string;
 }
 
 export function ProgressIndicator({ 
-  challengeId, 
-  userId, 
   progress = 0,
   className 
 }: ProgressIndicatorProps) {

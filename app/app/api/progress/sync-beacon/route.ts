@@ -10,7 +10,7 @@ const supabase = createClient(
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { type, items, deviceId } = body;
+    const { type, items } = body;
     
     if (type !== 'batch_sync' || !Array.isArray(items)) {
       return NextResponse.json(

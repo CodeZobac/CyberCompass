@@ -8,16 +8,6 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-interface AnonymousProgress {
-  challengeId: string;
-  selectedOptionId?: string;
-  isCompleted: boolean;
-  completedAt?: string;
-  createdAt: string;
-  updatedAt: string;
-  sessionId: string;
-}
-
 // Migrate anonymous progress to authenticated user
 export async function POST(request: NextRequest) {
   try {

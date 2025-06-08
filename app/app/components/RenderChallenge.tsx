@@ -5,19 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { Challenge } from '@lib/types';
 import { Card } from './ui/card';
-import { Button } from './ui/button';
 import { useChallenges } from '@lib/hooks/useChallenges';
 import { AIFeedback } from './AIFeedback';
 import { useProgressPersistence, useProgressBroadcast } from '@lib/hooks/useProgressPersistence';
 import { useRealtimeProgress, useRealtimeBroadcast } from '@lib/hooks/useRealtimeProgress';
 import { useAutoMigration } from '@lib/hooks/useProgressMigration';
-import { 
-  ProgressIndicator, 
-  OfflineIndicator, 
-  SyncSpinner, 
-  ConflictWarning,
-  CollaborationIndicator 
-} from './ui/progress-indicator';
 import { useNetworkStatus } from '@lib/services/offline-sync';
 import { useSession } from 'next-auth/react';
 
@@ -34,11 +26,7 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
   
   // Enhanced progress persistence
   const { 
-    progress: persistedProgress,
-    isLoadingProgress,
     submitProgress,
-    isSubmitting,
-    getCategoryProgress,
     isAuthenticated
   } = useProgressPersistence();
 
@@ -48,10 +36,11 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
   useProgressBroadcast();
 
   // Auto-migration when user signs in
-  const { triggerAutoMigration, isMigrating } = useAutoMigration();
+  const { triggerAutoMigration } = useAutoMigration();
 
-  // Network status
-  const { isOnline } = useNetworkStatus();
+  // Network status - commented out unused variable
+  // const { isOnline } = useNetworkStatus();
+  useNetworkStatus();
 
   // Trigger migration when user becomes authenticated
   React.useEffect(() => {
@@ -98,11 +87,11 @@ export const RenderChallenge: React.FC<ChallengeListProps> = ({ challenges, user
     }
   };
 
-  // Calculate category progress
-  const categoryProgress = React.useMemo(() => {
-    const challengeIds = challenges.map(c => c.id);
-    return getCategoryProgress(challengeIds);
-  }, [challenges, getCategoryProgress]);
+  // Calculate category progress - commented out unused variable
+  // const categoryProgress = React.useMemo(() => {
+  //   const challengeIds = challenges.map(c => c.id);
+  //   return getCategoryProgress(challengeIds);
+  // }, [challenges, getCategoryProgress]);
 
   // Find the selected option object
   const selectedOptionObject = currentChallenge?.options?.find(

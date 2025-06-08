@@ -12,9 +12,7 @@ import { useAutoMigration } from '@lib/hooks/useProgressMigration';
 import { 
   ProgressIndicator, 
   OfflineIndicator, 
-  SyncSpinner, 
-  ConflictWarning,
-  CollaborationIndicator 
+  SyncSpinner 
 } from './ui/progress-indicator';
 import { useNetworkStatus } from '@lib/services/offline-sync';
 import { useSession } from 'next-auth/react';

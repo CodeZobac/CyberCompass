@@ -87,7 +87,7 @@ export function GlobalSyncStatus({ className }: GlobalSyncStatusProps) {
           {!isOnline && (
             <div className="flex items-center gap-2">
               <OfflineIndicator />
-              <span className="text-xs">You're offline. Changes will sync when online.</span>
+              <span className="text-xs">You&apos;re offline. Changes will sync when online.</span>
             </div>
           )}
 
