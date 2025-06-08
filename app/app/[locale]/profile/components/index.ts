@@ -1,0 +1,9 @@
+export { ProfileHeader } from './ProfileHeader';
+export { ProgressOverview } from './ProgressOverview';
+export { CategoryBreakdown } from './CategoryBreakdown';
+export { AchievementBadges } from './AchievementBadges';
+export { PerformanceCharts } from './PerformanceCharts';
+export { WeakAreasAnalysis } from './WeakAreasAnalysis';
+export { ChallengeHistory } from './ChallengeHistory';
+export { ExportControls } from './ExportControls';
+export { ProfileDashboard } from './ProfileDashboard';
