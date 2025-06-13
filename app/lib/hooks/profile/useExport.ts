@@ -1,0 +1,170 @@
+'use client';
+
+import { useMutation } from '@tanstack/react-query';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import type { ExportData } from '@lib/types';
+
+async function exportData(format: 'json' | 'pdf'): Promise<ExportData | Blob> {
+  const response = await fetch('/api/profile/export', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ format }),
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to export data');
+  }
+  
+  if (format === 'json') {
+    const blob = await response.blob();
+    return blob;
+  }
+  
+  return response.json();
+}
+
+function downloadFile(blob: Blob, filename: string) {
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
+
+async function generatePDF(data: ExportData): Promise<void> {
+  // Create a temporary container for PDF content
+  const container = document.createElement('div');
+  container.style.position = 'absolute';
+  container.style.left = '-9999px';
+  container.style.width = '800px';
+  container.style.padding = '40px';
+  container.style.backgroundColor = 'white';
+  container.style.fontFamily = 'Inter, sans-serif';
+
+  container.innerHTML = `
+    <div style="text-align: center; margin-bottom: 40px;">
+      <h1 style="font-size: 32px; font-weight: bold; color: #000; margin-bottom: 8px;">
+        CyberCompass Profile Report
+      </h1>
+      <p style="font-size: 16px; color: #666; margin: 0;">
+        Generated on ${new Date(data.generatedAt).toLocaleDateString()}
+      </p>
+    </div>
+
+    <div style="border: 4px solid #000; padding: 20px; margin-bottom: 30px;">
+      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">User Information</h2>
+      <p><strong>Name:</strong> ${data.userInfo.name}</p>
+      <p><strong>Email:</strong> ${data.userInfo.email}</p>
+      <p><strong>Member Since:</strong> ${new Date(data.userInfo.joinDate).toLocaleDateString()}</p>
+    </div>
+
+    <div style="border: 4px solid #000; padding: 20px; margin-bottom: 30px;">
+      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Overall Progress</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <p><strong>Completion Rate:</strong> ${data.analytics.completionRate.toFixed(1)}%</p>
+          <p><strong>Challenges Completed:</strong> ${data.analytics.completedChallenges}/${data.analytics.totalChallenges}</p>
+        </div>
+        <div>
+          <p><strong>Average Score:</strong> ${data.analytics.averageScore.toFixed(1)}%</p>
+          <p><strong>Ethical Development Score:</strong> ${data.analytics.ethicalDevelopmentScore}/100</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="border: 4px solid #000; padding: 20px; margin-bottom: 30px;">
+      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Category Performance</h2>
+      ${data.analytics.categoryBreakdown.map(cat => `
+        <div style="margin-bottom: 16px; padding: 12px; border: 2px solid #ccc;">
+          <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">${cat.category}</h3>
+          <p>Completed: ${cat.completed}/${cat.total} (${((cat.completed/cat.total)*100).toFixed(1)}%)</p>
+          <p>Accuracy: ${cat.accuracy.toFixed(1)}%</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="border: 4px solid #000; padding: 20px; margin-bottom: 30px;">
+      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Achievements</h2>
+      ${data.analytics.achievements.length > 0 ? data.analytics.achievements.map(achievement => `
+        <div style="margin-bottom: 12px; padding: 10px; border: 2px solid #ddd;">
+          <p><strong>${achievement.achievement_name}</strong></p>
+          <p style="font-size: 14px; color: #666;">${achievement.achievement_description || ''}</p>
+          <p style="font-size: 12px; color: #999;">Earned: ${new Date(achievement.earned_at).toLocaleDateString()}</p>
+        </div>
+      `).join('') : '<p>No achievements yet. Keep learning!</p>'}
+    </div>
+
+    <div style="border: 4px solid #000; padding: 20px;">
+      <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Learning Streak</h2>
+      <p><strong>Current Streak:</strong> ${data.analytics.streakData.currentStreak} days</p>
+      <p><strong>Longest Streak:</strong> ${data.analytics.streakData.longestStreak} days</p>
+      <p><strong>Last Active:</strong> ${data.analytics.streakData.lastActiveDate || 'Never'}</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ccc;">
+      <p style="font-size: 12px; color: #999;">
+        This report was generated by CyberCompass - Your Cybersecurity Learning Companion
+      </p>
+    </div>
+  `;
+
+  document.body.appendChild(container);
+
+  try {
+    const canvas = await html2canvas(container, {
+      width: 800,
+      height: container.scrollHeight,
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    
+    const imgWidth = 210; // A4 width in mm
+    const pageHeight = 295; // A4 height in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const filename = `cyber-compass-profile-${new Date().toISOString().split('T')[0]}.pdf`;
+    pdf.save(filename);
+  } finally {
+    document.body.removeChild(container);
+  }
+}
+
+export function useExport() {
+  return useMutation({
+    mutationFn: async (format: 'json' | 'pdf') => {
+      const result = await exportData(format);
+      
+      if (format === 'json') {
+        const filename = `cyber-compass-profile-${new Date().toISOString().split('T')[0]}.json`;
+        downloadFile(result as Blob, filename);
+        return { success: true, format: 'json' };
+      } else {
+        const data = result as ExportData;
+        await generatePDF(data);
+        return { success: true, format: 'pdf' };
+      }
+    },
+  });
+}

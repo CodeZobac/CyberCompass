@@ -88,7 +88,7 @@ export function HeaderMenu() {
               <Menu.Label>Admin Panel</Menu.Label>
             </Menu.Item>
           )}
-          <Menu.Item onAction={() => handleNavigation('#settings')}>
+          <Menu.Item onAction={() => handleNavigation('/profile')}>
             <IconSettings />
             <Menu.Label>Profile</Menu.Label>
           </Menu.Item>
