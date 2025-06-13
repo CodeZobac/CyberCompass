@@ -7,11 +7,9 @@ import type { ProfileAnalytics } from '@lib/types';
 
 interface ProfileHeaderProps {
   analytics: ProfileAnalytics;
-  onExport: (format: 'json' | 'pdf') => void;
-  isExporting: boolean;
 }
 
-export function ProfileHeader({ analytics, onExport, isExporting }: ProfileHeaderProps) {
+export function ProfileHeader({ analytics }: ProfileHeaderProps) {
   const { data: session } = useSession();
   const t = useTranslations('profile');
 
@@ -104,6 +102,7 @@ export function ProfileHeader({ analytics, onExport, isExporting }: ProfileHeade
           </div>
         </div>
       </div>
+
     </motion.div>
   );
 }

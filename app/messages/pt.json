@@ -291,6 +291,21 @@
     "share": "Partilhar",
     "copy": "Copiar Link",
     "privacyNote": "Nota de Privacidade",
-    "privacyDescription": "Os seus dados são anonimizados em relatórios e exportações partilhados."
+    "privacyDescription": "Os seus dados são anonimizados em relatórios e exportações partilhados.",
+    "shareProfile": "Partilhar Perfil",
+    "generatingShareLink": "A Gerar Link...",
+    "shareLinkGenerated": "Link de Partilha Gerado!",
+    "linkCopiedToClipboard": "Link copiado para a área de transferência",
+    "copyAgain": "Copiar Novamente",
+    "sharedProfile": "Perfil Partilhado",
+    "sharedProfileSubtitle": "A visualizar um perfil de cibersegurança partilhado",
+    "sharedProfileNotice": "Está a visualizar o perfil partilhado de outra pessoa. Apenas utilizadores autenticados podem aceder a perfis partilhados.",
+    "sharedProfileInfo": "Informação do Perfil Partilhado",
+    "profileSharedBy": "Perfil partilhado por {name}",
+    "views": "Visualizações",
+    "expires": "Expira",
+    "memberSince": "Membro desde",
+    "sharedProfileError": "Não foi Possível Carregar o Perfil",
+    "goBack": "Voltar"
   }
 }

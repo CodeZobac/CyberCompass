@@ -63,11 +63,7 @@ export function ProfileDashboard({ userId }: ProfileDashboardProps) {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Main Content */}
       <div className="lg:col-span-2 space-y-6">
-        <ProfileHeader 
-          analytics={analytics} 
-          onExport={exportMutation.mutate}
-          isExporting={exportMutation.isPending}
-        />
+        <ProfileHeader analytics={analytics} />
         
         <ProgressOverview analytics={analytics} />
         

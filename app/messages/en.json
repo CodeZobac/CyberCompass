@@ -295,6 +295,21 @@
     "share": "Share",
     "copy": "Copy Link",
     "privacyNote": "Privacy Note",
-    "privacyDescription": "Your data is anonymized in shared reports and exports."
+    "privacyDescription": "Your data is anonymized in shared reports and exports.",
+    "shareProfile": "Share Profile",
+    "generatingShareLink": "Generating Link...",
+    "shareLinkGenerated": "Share Link Generated!",
+    "linkCopiedToClipboard": "Link copied to clipboard",
+    "copyAgain": "Copy Again",
+    "sharedProfile": "Shared Profile",
+    "sharedProfileSubtitle": "Viewing a shared cybersecurity profile",
+    "sharedProfileNotice": "You are viewing someone else's shared profile. Only signed-in users can access shared profiles.",
+    "sharedProfileInfo": "Shared Profile Information",
+    "profileSharedBy": "Profile shared by {name}",
+    "views": "Views",
+    "expires": "Expires",
+    "memberSince": "Member since",
+    "sharedProfileError": "Unable to Load Profile",
+    "goBack": "Go Back"
   }
 }
