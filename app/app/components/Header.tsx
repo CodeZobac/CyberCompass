@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { CompactSyncStatus } from "./GlobalSyncStatus";
 
 const Header = () => {
     const { theme } = useTheme();
@@ -37,7 +38,8 @@ const Header = () => {
                 )}
             </div>
 </Link>
-            <div className="flex items-center px-4 mr-24">
+            <div className="flex items-center gap-4 px-4 mr-24">
+                <CompactSyncStatus />
                 <HeaderMenu />
                 <LanguageSwitcher />
             </div>
