@@ -3,11 +3,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@lib/auth';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 // Get progress for authenticated user
 export async function GET() {
   try {
@@ -19,6 +14,11 @@ export async function GET() {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const { data, error } = await supabase
       .from('user_challenge_progress')

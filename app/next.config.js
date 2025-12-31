@@ -5,8 +5,13 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
+  eslint: {
+    // Only fail build on errors, not warnings
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    // Don't fail build on type errors during production build
+    ignoreBuildErrors: false,
   },
   images: {
     domains: [

@@ -4,11 +4,6 @@ import { authOptions } from '@lib/auth';
 import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -19,6 +14,11 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const userId = session.user.id;
     const { expiresInDays = 30 } = await request.json();
@@ -87,6 +87,11 @@ export async function GET() {
       );
     }
 
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const userId = session.user.id;
 
     // Get active share links for the user
@@ -135,6 +140,11 @@ export async function DELETE(request: NextRequest) {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const userId = session.user.id;
     const { token } = await request.json();

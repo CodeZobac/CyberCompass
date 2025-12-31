@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import { GlobalSyncStatus } from "./components/GlobalSyncStatus";
+import { KeyboardNavigationDetector } from "./components/ui/keyboard-navigation-detector";
+import { GlobalKeyboardShortcuts, KeyboardShortcutsHelp } from "./components/ui/keyboard-shortcuts";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,8 +31,11 @@ export default function RootLayout({
         className={`${inter.variable} antialiased font-sans`}
       >
         <Providers >
+          <KeyboardNavigationDetector />
+          <GlobalKeyboardShortcuts />
           {children}
           <GlobalSyncStatus />
+          <KeyboardShortcutsHelp />
         </Providers>
       </body>
     </html>

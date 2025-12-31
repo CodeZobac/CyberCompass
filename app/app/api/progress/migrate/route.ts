@@ -3,11 +3,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@lib/auth';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 // Migrate anonymous progress to authenticated user
 export async function POST(request: NextRequest) {
   try {
@@ -19,6 +14,11 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const body = await request.json();
     const { sessionId, anonymousProgress } = body;

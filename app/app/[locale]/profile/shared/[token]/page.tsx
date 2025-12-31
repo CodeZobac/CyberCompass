@@ -6,10 +6,10 @@ import { authOptions } from '../../../../../lib/auth';
 import { SharedProfileDashboard } from './components/SharedProfileDashboard';
 
 interface SharedProfilePageProps {
-  params: {
+  params: Promise<{
     token: string;
     locale: string;
-  };
+  }>;
 }
 
 export default async function SharedProfilePage({ params }: SharedProfilePageProps) {
@@ -20,7 +20,7 @@ export default async function SharedProfilePage({ params }: SharedProfilePagePro
     redirect('/auth/signin');
   }
 
-  const { token } = params;
+  const { token } = await params;
 
   return (
     <div className="min-h-screen bg-white">

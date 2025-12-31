@@ -23,6 +23,8 @@ export function AIFeedback({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState<number>(0);
+  const [isFallback, setIsFallback] = useState<boolean>(false);
+  const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
   const params = useParams(); // Get URL parameters
 
   // Define generateFallbackFeedback before the useEffect that uses it
@@ -45,8 +47,15 @@ export function AIFeedback({
     const fetchFeedback = async () => {
       setLoading(true);
       setError(null);
+      setIsFallback(false);
+      setFollowUpQuestions([]);
       
       try {
+        // Get user ID from localStorage (for anonymous users)
+        const userId = typeof window !== 'undefined' 
+          ? localStorage.getItem('cybercompass-session-id') || 'anonymous'
+          : 'anonymous';
+
         const response = await fetch('/api/ai-feedback', {
           method: 'POST',
           headers: {
@@ -57,10 +66,13 @@ export function AIFeedback({
             correctOption: correctOption.content,
             challengeTitle: challenge.title,
             challengeDescription: challenge.description,
-            locale: params.locale // Add locale to the request body
+            locale: params.locale,
+            userId: userId,
+            challengeId: challenge.id,
+            userHistory: [], // Could be populated from user's progress history
           }),
           // Add timeout to prevent long-hanging requests
-          signal: AbortSignal.timeout(10000)
+          signal: AbortSignal.timeout(30000) // Increased to 30s for AI backend
         });
 
         if (!response.ok) {
@@ -68,19 +80,34 @@ export function AIFeedback({
         }
 
         const data = await response.json();
+        
+        // Handle fallback indicator
+        if (data.fallback) {
+          setIsFallback(true);
+          console.warn('Using fallback feedback:', data.error_message);
+        }
+        
+        // Set feedback and additional data
         setFeedback(data.feedback || 'No feedback available at this time.');
+        
+        // Set follow-up questions if available
+        if (data.follow_up_questions && data.follow_up_questions.length > 0) {
+          setFollowUpQuestions(data.follow_up_questions);
+        }
+        
       } catch (err) {
         console.error('Error fetching AI feedback:', err);
         const errorMessage = err instanceof Error ? err.message : 'Unknown error';
         
         // Specifically check for timeout or server unreachable issues
         if (errorMessage.includes('timeout') || errorMessage.includes('Failed to fetch')) {
-          setError('Could not connect to the AI service. It may not be running.');
+          setError('Could not connect to the AI service. Using basic feedback.');
         } else {
-          setError('Could not generate feedback at this time. Please try again later.');
+          setError('Could not generate feedback at this time. Using basic feedback.');
         }
         
         // Generate fallback feedback
+        setIsFallback(true);
         generateFallbackFeedback();
       } finally {
         setLoading(false);
@@ -124,6 +151,11 @@ export function AIFeedback({
       <h3 className="text-lg font-bold mb-2 flex items-center">
         <span className="mr-2">🤖</span>
         AI Assistant Feedback
+        {isFallback && (
+          <span className="ml-2 text-xs font-normal text-gray-500 bg-gray-100 px-2 py-1 rounded">
+            Basic Mode
+          </span>
+        )}
       </h3>
       
       {loading && (
@@ -136,7 +168,7 @@ export function AIFeedback({
       )}
       
       {error && !loading && (
-        <div className="text-red-600 mb-3">
+        <div className="text-amber-600 mb-3 text-sm">
           {error}
           <button 
             onClick={handleRetry}
@@ -148,12 +180,25 @@ export function AIFeedback({
       )}
       
       {!loading && (
-        <div className="prose max-w-none min-h-[60px]">
-          {displayedFeedback || ' '} 
-          {displayedFeedback !== feedback && !loading && (
-            <span className="animate-pulse">|</span>
+        <>
+          <div className="prose max-w-none min-h-[60px]">
+            {displayedFeedback || ' '} 
+            {displayedFeedback !== feedback && !loading && (
+              <span className="animate-pulse">|</span>
+            )}
+          </div>
+          
+          {followUpQuestions.length > 0 && displayedFeedback === feedback && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <p className="text-sm font-semibold mb-2">💭 Think about:</p>
+              <ul className="text-sm space-y-1 list-disc list-inside">
+                {followUpQuestions.map((question, index) => (
+                  <li key={index} className="text-gray-700">{question}</li>
+                ))}
+              </ul>
+            </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

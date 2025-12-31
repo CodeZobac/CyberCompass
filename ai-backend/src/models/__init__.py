@@ -1,0 +1,66 @@
+"""Data models for the AI backend."""
+
+from src.models.requests import (
+    ActivityType,
+    AnalyticsRequest,
+    AnalyticsResponse,
+    CatfishCharacterProfile,
+    CatfishChatStartRequest,
+    ChatMessage,
+    CompetencyScore,
+    DeepfakeChallengeRequest,
+    DeepfakeChallengeResponse,
+    DeepfakeSubmissionRequest,
+    DeepfakeSubmissionResponse,
+    DisinformationType,
+    FeedbackRequest,
+    FeedbackResponse,
+    LocaleEnum,
+    LoginRequest,
+    MediaType,
+    SocialMediaPost,
+    SocialMediaSimulationRequest,
+    TokenResponse,
+    TypingIndicator,
+    WebSocketMessage,
+)
+from src.models.responses import (
+    ErrorDetail,
+    ErrorResponse,
+    HealthCheckResponse,
+    PaginatedResponse,
+    SuccessResponse,
+)
+
+__all__ = [
+    # Enums
+    "LocaleEnum",
+    "ActivityType",
+    "MediaType",
+    "DisinformationType",
+    # Request Models
+    "LoginRequest",
+    "TokenResponse",
+    "FeedbackRequest",
+    "FeedbackResponse",
+    "DeepfakeChallengeRequest",
+    "DeepfakeChallengeResponse",
+    "DeepfakeSubmissionRequest",
+    "DeepfakeSubmissionResponse",
+    "SocialMediaSimulationRequest",
+    "SocialMediaPost",
+    "CatfishChatStartRequest",
+    "CatfishCharacterProfile",
+    "ChatMessage",
+    "AnalyticsRequest",
+    "AnalyticsResponse",
+    "CompetencyScore",
+    "WebSocketMessage",
+    "TypingIndicator",
+    # Response Models
+    "ErrorResponse",
+    "ErrorDetail",
+    "SuccessResponse",
+    "PaginatedResponse",
+    "HealthCheckResponse",
+]

@@ -4,11 +4,6 @@ import { authOptions } from '@lib/auth';
 import { createClient } from '@supabase/supabase-js';
 import type { UserAchievement } from '@lib/types';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -19,6 +14,11 @@ export async function GET() {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const { data: achievements, error } = await supabase
       .from('user_achievements')
@@ -51,6 +51,11 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const body = await request.json();
     const { achievement_type, achievement_name, achievement_description, metadata } = body;

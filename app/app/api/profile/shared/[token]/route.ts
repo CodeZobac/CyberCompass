@@ -5,15 +5,10 @@ import { createClient } from '@supabase/supabase-js';
 import { format, subDays, startOfDay } from 'date-fns';
 import type { ProfileAnalytics } from '@lib/types';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 interface RouteParams {
-  params: {
+  params: Promise<{
     token: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
@@ -28,7 +23,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    const { token } = params;
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { token } = await params;
 
     if (!token) {
       return NextResponse.json(

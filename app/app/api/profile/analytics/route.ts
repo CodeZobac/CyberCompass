@@ -5,11 +5,6 @@ import { createClient } from '@supabase/supabase-js';
 import { format, subDays, startOfDay } from 'date-fns';
 import type { ProfileAnalytics } from '@lib/types';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -20,6 +15,11 @@ export async function GET() {
         { status: 401 }
       );
     }
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     const userId = session.user.id;
 

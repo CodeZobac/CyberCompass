@@ -1,44 +1,4 @@
-# User Stories V2.0 - CyberCompass
-
-## US-1: Multi-Role Cyberbullying Simulation Agent
-
-As a user learning about cyberbullying, I need an interactive simulation with a multi-role AI agent that alternates between victim, attacker, and mediator roles, so I can practice intervention strategies in realistic scenarios with strategic human-in-the-loop moments.
-
-**Acceptance Criteria:**
-- Agent switches seamlessly between 3 distinct roles (victim, attacker, mediator)
-- Conversation pauses at critical moments for user intervention input
-- User responses are evaluated and educational feedback is provided
-- Emotional intensity adapts based on user progress and responses
-- Scenario difficulty scales with user competency
-- Conversation memory maintained throughout simulation
-- Multiple cyberbullying scenarios available (social media, gaming, messaging)
-- Real-time sentiment analysis of user interventions
-
-**Tech Stack:** LangGraphJS for agent orchestration, custom state management, structured outputs for role transitions, human-in-the-loop integration, reflection mechanisms for self-improvement, TypeScript/TSX integration
-
-**Context:** Interactive simulations provide safe environments for users to practice ethical decision-making and cyberbullying intervention strategies without real-world consequences.
-
----
-
-## US-2: Progress and Choice Persistence
-
-Como utilizador, quero que o meu progresso e as minhas escolhas sejam guardadas, so que possa continuar a minha jornada de aprendizagem e ver a minha evolução ao longo do tempo.
-
-**Acceptance Criteria:**
-- User authentication and session management
-- Progress tracking across all cybersecurity challenges
-- Choice history with timestamps and outcomes
-- Resume functionality for incomplete simulations
-- Cross-device synchronization of user data
-- Export functionality for progress reports
-- Secure data encryption for sensitive information
-- Offline capability with sync when reconnected
-
-**Tech Stack:** Supabase for data persistence, NextAuth for authentication, state management for real-time updates, data encryption for sensitive information, progressive web app capabilities
-
-**Context:** Persistent progress tracking enables personalized learning paths and helps users understand their development over time, increasing engagement and learning effectiveness.
-
----
+# User storys - NEXT STEPS
 
 ## US-3: Ethical Development Summary and Improvement Areas
 

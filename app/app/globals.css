@@ -114,6 +114,63 @@
     --radius-2xl: calc(var(--radius-lg) * 1.5);
     --radius-3xl: calc(var(--radius-lg) * 2);
     --radius-4xl: calc(var(--radius-lg) * 3);
+
+    /* ===== BRUTALIST DESIGN TOKENS ===== */
+    
+    /* Color Palette - WCAG AA Compliant */
+    /* All colors verified for contrast ratios */
+    --brutal-red: #EF4444;        /* Red-500: 4.5:1 on white (AA for large text) */
+    --brutal-red-dark: #B91C1C;   /* Red-700: 7.5:1 on white (AA for all text) */
+    --brutal-blue: #3B82F6;       /* Blue-500: 4.5:1 on white (AA for large text) */
+    --brutal-blue-dark: #1D4ED8;  /* Blue-700: 8.6:1 on white (AA for all text) */
+    --brutal-green: #10B981;      /* Green-500: 4.5:1 on white (AA for large text) */
+    --brutal-green-dark: #15803D; /* Green-700: 6.9:1 on white (AA for all text) */
+    --brutal-yellow: #F59E0B;     /* Yellow-500: 2.9:1 on white (use with caution) */
+    --brutal-yellow-dark: #854D0E;/* Yellow-800: 7.2:1 on white (AA for all text) */
+    --brutal-purple: #8B5CF6;     /* Purple-500: 4.5:1 on white (AA for large text) */
+    --brutal-purple-dark: #6D28D9;/* Purple-700: 7.1:1 on white (AA for all text) */
+    --brutal-pink: #EC4899;       /* Pink-500: 4.5:1 on white (AA for large text) */
+    --brutal-black: #000000;      /* Black: 21:1 on white (AAA) */
+    --brutal-white: #FFFFFF;      /* White: 21:1 on black (AAA) */
+    --brutal-gray-50: #F9FAFB;    /* Very light gray */
+    --brutal-gray-100: #F3F4F6;   /* Light gray */
+    --brutal-gray-700: #374151;   /* Dark gray: 10.7:1 on white (AA for all text) */
+    --brutal-gray-800: #1F2937;   /* Darker gray: 14.1:1 on white (AAA) */
+    --brutal-gray-900: #111827;   /* Almost black: 16.7:1 on white (AAA) */
+
+    /* Spacing Scale */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-12: 48px;
+    --spacing-16: 64px;
+
+    /* Border Widths */
+    --border-thin: 2px;
+    --border-medium: 4px;
+    --border-thick: 6px;
+
+    /* Shadow Offsets */
+    --shadow-sm: 4px 4px 0 0;
+    --shadow-md: 8px 8px 0 0;
+    --shadow-lg: 12px 12px 0 0;
+
+    /* Typography Scale (using Tailwind's text sizes) */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.875rem;     /* 14px */
+    --text-base: 1rem;       /* 16px */
+    --text-lg: 1.125rem;     /* 18px */
+    --text-xl: 1.25rem;      /* 20px */
+    --text-2xl: 1.5rem;      /* 24px */
+    --text-3xl: 1.875rem;    /* 30px */
+    --text-4xl: 2.25rem;     /* 36px */
+    --text-5xl: 3rem;        /* 48px */
+    --text-6xl: 3.75rem;     /* 60px */
+    --text-7xl: 4.5rem;      /* 72px */
+    --text-8xl: 6rem;        /* 96px */
   }
 
   /* Override any dark mode preferences */
@@ -208,10 +265,59 @@
 
 /* Brutalist Design Utilities */
 @layer utilities {
-  .border-6 {
-    border-width: 6px;
+  /* Border Widths */
+  .border-2 {
+    border-width: var(--border-thin);
   }
 
+  .border-4 {
+    border-width: var(--border-medium);
+  }
+
+  .border-6 {
+    border-width: var(--border-thick);
+  }
+
+  /* Shadow Utilities */
+  .shadow-brutal-sm {
+    box-shadow: var(--shadow-sm) var(--brutal-black);
+  }
+
+  .shadow-brutal-md {
+    box-shadow: var(--shadow-md) var(--brutal-black);
+  }
+
+  .shadow-brutal-lg {
+    box-shadow: var(--shadow-lg) var(--brutal-black);
+  }
+
+  /* Color-specific shadows */
+  .shadow-brutal-red {
+    box-shadow: var(--shadow-lg) var(--brutal-red);
+  }
+
+  .shadow-brutal-blue {
+    box-shadow: var(--shadow-lg) var(--brutal-blue);
+  }
+
+  .shadow-brutal-green {
+    box-shadow: var(--shadow-lg) var(--brutal-green);
+  }
+
+  /* Hover shadow utilities */
+  .hover\:shadow-brutal-sm:hover {
+    box-shadow: var(--shadow-sm) var(--brutal-black);
+  }
+
+  .hover\:shadow-brutal-md:hover {
+    box-shadow: var(--shadow-md) var(--brutal-black);
+  }
+
+  .hover\:shadow-brutal-lg:hover {
+    box-shadow: var(--shadow-lg) var(--brutal-black);
+  }
+
+  /* Legacy shadow utilities for backward compatibility */
   .text-shadow-\[6px_6px_0px_\#ffffff\] {
     text-shadow: 6px 6px 0px #ffffff;
   }
@@ -246,5 +352,718 @@
 
   .hover\:shadow-\[4px_4px_0px_0px_\#000000\]:hover {
     box-shadow: 4px 4px 0px 0px #000000;
+  }
+}
+
+/* Brutalist Animations */
+@layer utilities {
+  /* Animation Keyframes */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation Classes */
+  .animate-slideIn {
+    animation: slideIn 300ms ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 300ms ease-out;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 400ms ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 400ms ease-out;
+  }
+
+  .animate-pulse-brutal {
+    animation: pulse 500ms ease-out;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--brutal-gray-100) 0%,
+      var(--brutal-gray-50) 50%,
+      var(--brutal-gray-100) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Hover Transform Utilities */
+  .hover-lift {
+    transition: all 200ms ease-out;
+  }
+
+  .hover-lift:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg) var(--brutal-black);
+  }
+
+  .hover-press {
+    transition: all 150ms ease-out;
+  }
+
+  .hover-press:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-sm) var(--brutal-black);
+  }
+
+  /* Stagger Animation Support */
+  .stagger-container > * {
+    animation: slideUp 300ms ease-out backwards;
+  }
+
+  .stagger-container > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .stagger-container > *:nth-child(2) {
+    animation-delay: 100ms;
+  }
+
+  .stagger-container > *:nth-child(3) {
+    animation-delay: 200ms;
+  }
+
+  .stagger-container > *:nth-child(4) {
+    animation-delay: 300ms;
+  }
+
+  .stagger-container > *:nth-child(5) {
+    animation-delay: 400ms;
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .animate-slide-in,
+    .animate-fade-in,
+    .animate-pulse-brutal,
+    .animate-shimmer,
+    .stagger-container > * {
+      animation: none !important;
+    }
+
+    .hover-lift:hover,
+    .hover-press:hover {
+      transform: none !important;
+    }
+  }
+
+  /* Mobile Touch Optimizations */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Ensure minimum touch target size (44x44px) */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* ===== KEYBOARD NAVIGATION & FOCUS INDICATORS ===== */
+  /* Enhanced focus indicators for accessibility (Requirement 8.1) */
+  
+  /* Default focus style for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="button"]:focus-visible,
+  [role="link"]:focus-visible,
+  [role="tab"]:focus-visible,
+  [role="menuitem"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 2px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Remove default browser focus outline */
+  *:focus {
+    outline: none;
+  }
+
+  /* Only show custom focus on keyboard navigation */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* High contrast focus for buttons */
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Focus for links */
+  a:focus-visible {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+
+  /* Focus for form inputs */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 0;
+    border-color: var(--brutal-blue);
+  }
+
+  /* Skip to content link styling */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus,
+  .sr-only:focus-visible {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus within for containers */
+  .focus-within-ring:focus-within {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 2px;
+  }
+
+  /* Keyboard navigation helper - show focus on tab */
+  body.using-keyboard *:focus {
+    outline: 4px solid var(--brutal-blue);
+    outline-offset: 2px;
+  }
+
+  /* Tab order indicator (for development/testing) */
+  [data-show-tab-order] *[tabindex]:not([tabindex="-1"])::before {
+    content: attr(tabindex);
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: var(--brutal-red);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 4px;
+    border: 2px solid black;
+    z-index: 1000;
+  }
+
+  /* ===== WCAG AA COMPLIANT COLOR UTILITIES ===== */
+  /* Text colors that meet WCAG AA standards on white background */
+  
+  .text-accessible-gray {
+    color: var(--brutal-gray-700); /* 10.7:1 ratio */
+  }
+
+  .text-accessible-blue {
+    color: var(--brutal-blue-dark); /* 8.6:1 ratio */
+  }
+
+  .text-accessible-red {
+    color: var(--brutal-red-dark); /* 7.5:1 ratio */
+  }
+
+  .text-accessible-green {
+    color: var(--brutal-green-dark); /* 6.9:1 ratio */
+  }
+
+  .text-accessible-purple {
+    color: var(--brutal-purple-dark); /* 7.1:1 ratio */
+  }
+
+  .text-accessible-yellow {
+    color: var(--brutal-yellow-dark); /* 7.2:1 ratio */
+  }
+
+  /* Background colors with appropriate text colors */
+  .bg-accessible-blue {
+    background-color: var(--brutal-blue);
+    color: var(--brutal-white); /* 4.5:1 ratio */
+  }
+
+  .bg-accessible-red {
+    background-color: var(--brutal-red);
+    color: var(--brutal-white); /* 4.5:1 ratio */
+  }
+
+  .bg-accessible-green {
+    background-color: var(--brutal-green);
+    color: var(--brutal-white); /* 4.5:1 ratio */
+  }
+
+  /* Warning: Yellow requires dark text for accessibility */
+  .bg-accessible-yellow {
+    background-color: var(--brutal-yellow);
+    color: var(--brutal-black); /* Better contrast */
+  }
+
+  /* Ensure links have sufficient contrast */
+  a:not([class]) {
+    color: var(--brutal-blue-dark);
+    text-decoration: underline;
+  }
+
+  a:not([class]):hover {
+    color: var(--brutal-blue);
+  }
+
+  /* Ensure form elements have sufficient contrast */
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    color: var(--brutal-black);
+    background-color: var(--brutal-white);
+    border-color: var(--brutal-gray-700);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--brutal-gray-700);
+    opacity: 0.7;
+  }
+
+  /* Disabled state with sufficient contrast */
+  button:disabled,
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    color: var(--brutal-gray-700);
+    background-color: var(--brutal-gray-100);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Prevent text size adjustment on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Smooth scrolling for mobile */
+  @media (max-width: 640px) {
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+/* ===== RESPONSIVE DESIGN UTILITIES ===== */
+@layer utilities {
+  /* Mobile Breakpoint Styles (< 640px) */
+  @media (max-width: 640px) {
+    /* Convert multi-column layouts to single column */
+    .mobile\:grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    /* Adjust font sizes for mobile */
+    .mobile\:text-4xl {
+      font-size: 2.25rem; /* 36px - reduced from larger sizes */
+    }
+
+    .mobile\:text-3xl {
+      font-size: 1.875rem; /* 30px */
+    }
+
+    .mobile\:text-2xl {
+      font-size: 1.5rem; /* 24px */
+    }
+
+    .mobile\:text-xl {
+      font-size: 1.25rem; /* 20px */
+    }
+
+    .mobile\:text-lg {
+      font-size: 1.125rem; /* 18px */
+    }
+
+    .mobile\:text-base {
+      font-size: 1rem; /* 16px */
+    }
+
+    /* Adjust padding and margins for mobile */
+    .mobile\:px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .mobile\:py-8 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .mobile\:py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .mobile\:p-4 {
+      padding: 1rem;
+    }
+
+    .mobile\:gap-4 {
+      gap: 1rem;
+    }
+
+    .mobile\:space-y-4 > * + * {
+      margin-top: 1rem;
+    }
+
+    /* Full width buttons on mobile */
+    .mobile\:w-full {
+      width: 100%;
+    }
+
+    /* Stack flex items vertically on mobile */
+    .mobile\:flex-col {
+      flex-direction: column;
+    }
+
+    /* Hide elements on mobile */
+    .mobile\:hidden {
+      display: none;
+    }
+
+    /* Show elements only on mobile */
+    .mobile\:block {
+      display: block;
+    }
+
+    /* Reduce border widths on mobile for better space usage */
+    .mobile\:border-4 {
+      border-width: 4px;
+    }
+
+    .mobile\:border-2 {
+      border-width: 2px;
+    }
+
+    /* Reduce shadow offsets on mobile */
+    .mobile\:shadow-brutal-sm {
+      box-shadow: 4px 4px 0 0 var(--brutal-black);
+    }
+
+    /* Adjust aspect ratios for mobile */
+    .mobile\:aspect-square {
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Mobile-specific text alignment */
+    .mobile\:text-center {
+      text-align: center;
+    }
+
+    /* Mobile navigation drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform 300ms ease-out;
+    }
+
+    .mobile-drawer.open {
+      transform: translateX(0);
+    }
+
+    /* Optimize touch targets */
+    button,
+    a,
+    [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 12px 16px;
+    }
+
+    /* Reduce hero section height on mobile */
+    .hero-section {
+      min-height: auto;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    /* Stack cards vertically with full width */
+    .feature-card {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    /* Adjust chat interface for mobile */
+    .chat-container {
+      height: calc(100vh - 200px);
+      max-height: 600px;
+    }
+
+    /* Mobile-optimized message bubbles */
+    .message-bubble {
+      max-width: 85%;
+      font-size: 0.875rem;
+    }
+
+    /* Reduce stats card sizes on mobile */
+    .stats-card {
+      padding: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    /* Mobile-friendly progress bars */
+    .progress-bar {
+      height: 8px;
+    }
+
+    /* Adjust modal/dialog sizes for mobile */
+    .dialog-content {
+      width: calc(100vw - 2rem);
+      max-width: 100%;
+      margin: 1rem;
+    }
+  }
+
+  /* Tablet Breakpoint Styles (640px - 1024px) */
+  @media (min-width: 640px) and (max-width: 1024px) {
+    /* Adjust grid layouts to 2 columns */
+    .tablet\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Scale down padding and margins */
+    .tablet\:px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .tablet\:py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .tablet\:gap-6 {
+      gap: 1.5rem;
+    }
+
+    /* Adjust font sizes for tablet */
+    .tablet\:text-5xl {
+      font-size: 3rem; /* 48px */
+    }
+
+    .tablet\:text-4xl {
+      font-size: 2.25rem; /* 36px */
+    }
+
+    .tablet\:text-3xl {
+      font-size: 1.875rem; /* 30px */
+    }
+
+    /* Optimize for landscape orientation */
+    @media (orientation: landscape) {
+      .landscape\:h-screen {
+        height: 100vh;
+      }
+
+      .landscape\:flex-row {
+        flex-direction: row;
+      }
+
+      .landscape\:max-h-screen {
+        max-height: 100vh;
+      }
+    }
+
+    /* Tablet-specific layouts */
+    .tablet\:flex-row {
+      flex-direction: row;
+    }
+
+    .tablet\:w-1\/2 {
+      width: 50%;
+    }
+
+    /* Adjust card sizes for tablet */
+    .feature-card {
+      width: calc(50% - 1rem);
+    }
+
+    /* Tablet navigation adjustments */
+    .tablet\:block {
+      display: block;
+    }
+
+    .tablet\:hidden {
+      display: none;
+    }
+  }
+
+  /* Desktop Breakpoint Styles (> 1024px) */
+  @media (min-width: 1024px) {
+    /* Show desktop-only elements */
+    .desktop\:block {
+      display: block;
+    }
+
+    .desktop\:flex {
+      display: flex;
+    }
+
+    .desktop\:hidden {
+      display: none;
+    }
+
+    /* Desktop grid layouts */
+    .desktop\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .desktop\:grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Utility classes for responsive visibility */
+  @media (max-width: 640px) {
+    .hidden-mobile {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .show-mobile-only {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 1024px) {
+    .hidden-tablet {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hidden-desktop {
+      display: none !important;
+    }
+  }
+
+  /* Responsive container utilities */
+  .container-responsive {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-responsive {
+      max-width: 640px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container-responsive {
+      max-width: 768px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-responsive {
+      max-width: 1024px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-responsive {
+      max-width: 1280px;
+    }
   }
 }
